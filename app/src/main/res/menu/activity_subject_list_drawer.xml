@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/subjectFragment"
+
+            android:title="@string/subjects"/>
+        <item
+            android:id="@+id/weekFragment"
+            android:title="@string/week"/>
+        <item
+            android:id="@+id/namesFragment"
+
+            android:title="@string/teachersNames"/>
+        <item
+            android:id="@+id/timetableFragment"
+
+            android:title="@string/timetable"/>
+    </group>
+
+    <item
+        android:title=""
+        android:actionLayout="@layout/view"
+        />
+
+
+        <group android:checkableBehavior="single">
+
+            <item
+                android:id="@+id/settings_Fragment"
+
+                android:title="@string/settings"/>
+
+            <item
+                android:id="@+id/aboutApp"
+
+                android:title="@string/about"/>
+
+            <item
+                android:id="@+id/help"
+
+                android:title="@string/help"/>
+    </group>
+
+
+</menu>

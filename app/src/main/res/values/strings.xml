@@ -1,0 +1,77 @@
+<resources>
+    <string name="app_name">Школьный помощник</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <string name="action_settings">Settings</string>
+    <string name="subjects">Предметы</string>
+    <string name="enterNote">Введите отметку</string>
+    <string name="cancel">Отмена</string>
+    <string name="done">Готово</string>
+
+    <string name="adding">Добавление</string>
+    <string name="editing">Редактирование</string>
+    <string name="NoteIsNotCorrect">Отметка некорректна</string>
+    <string name="yourAverage">Ваш средний балл: </string>
+    <string name="week">Расписание</string>
+
+    <string name="timetable">Звонки</string>
+    <string name="newSubject">Новый предмет</string>
+    <string name="subjectAdded">Добавлен новый предмет.</string>
+    <string name="subjectList">Русский язык,Русская литература,Белорусский язык,Белорусская литература,Математика,Иностранный язык,Физика,Химия,Биология,Обществоведение,Информатика,География,История</string>
+    <string name="defaultLessonName">Пусто</string>
+    <string name="daysNames">Понедельник,Вторник,Среда,Четверг,Пятница,Суббота,Воскресенье</string>
+    <string name="teachersNames">Учителя</string>
+    <string name="subjectName">Название предмета:</string>
+    <string name="teacher">Учитель:</string>
+    <string name="defaultTimetable">8.00;8.45;8.55;9.40;10.00;10.45;11.05;11.50;12.00;12.45;12.55;13.40;14.00;14.45;15.00;15.45</string>
+    <string name="invalidDate">Введена некорректная дата</string>
+    <string name="totalLessons">Кол-во уроков в день: </string>
+    <string name="isShowNotifications">Показывать уведомления</string>
+    <string name="isMuting">Отключать звук на уроках</string>
+    <string name="subjectColors">Цвета отметок: </string>
+    <string name="redColor">Красный цвет с 0 баллов</string>
+    <string name="yellowColor">Жёлтый цвет с</string>
+    <string name="greenColor">Зелёный цвет с</string>
+    <string name="points">баллов</string>
+    <string name="settings">Настройки</string>
+    <string name="classroom">Кабинет: </string>
+    <string name="reset">Сброс данных</string>
+    <string name="classs">Каб. </string>
+    <string name="notes">Отметки</string>
+    <string name="classes">Кабинеты</string>
+    <string name="lessonHasStarted">Начался урок</string>
+    <string name="lessonNow">Идёт урок</string>
+    <string name="noteIsTooBig">Отметка не может быть больше максимальной отметки, указанной в настройках</string>
+    <string name="timetableAdded">Добавлено новое расписание звонков.</string>
+    <string name="delete">Удалить</string>
+    <string name="yes">Да</string>
+    <string name="confirmation">Подтверждение</string>
+    <string name="areYouSure">Вы точно хотите удалить? Это действие отменить нельзя.</string>
+    <string name="lastTimetable">Нельзя удалить последнее расписание</string>
+    <string name="beforeRemoving">Перед удалением расписания звонков, отвяжите его от всех дней</string>
+    <string name="maxNote">Максимальная отметка: </string>
+    <string name="numberOfLessons">Кол-во уроков: </string>
+    <string name="about">О приложении</string>
+    <string name="help">Помощь</string>
+    <string name="aboutApp">Приложение предназначено для улучшения успеваемости и создано с целью помочь всем учащимся.</string>
+    <string name="myContacts">Мои контакты: </string>
+    <string name="gmail">handeninc@gmail.com</string>
+    <string name="vk">https://vk.com/handeninc</string>
+    <string name="shooseDays">Выберите дни</string>
+    <string name="schoolHelper">Школьный помощник</string>
+    <string name="subjects1">1. Предметы</string>
+    <string name="subjectsText">Во вкладке \"Предметы\" для каждого элемента указано название и средний балл в скобочках, какие и сколько отметок нужно получить, чтобы повысить средний балл,
+а также имя преподавателя и номер кабинета. По долгому нажатию открывается диалоговое окно с редактированием предмета.</string>
+    <string name="notes2">2. Отметки</string>
+    <string name="notesText">По короткому нажатию на предмет открывается новый экран со списком отметок для выбранного предмета. Отметки добавляются и редактируются по нажатию.</string>
+    <string name="schedule3">3. Расписание</string>
+    <string name="scheduleText">Чтобы заполнить расписание, во вкладке \"Расписание\" выберите нужный день, а затем из выпадающего списка подходящий урок.</string>
+    <string name="timetable4">4. Звонки</string>
+    <string name="timetableText">Во вкладке \"Звонки\" можно создавать несколько расписаний звонков и выбирать, для каких дней они будут использоваться в диалоговом окне, которое вызывается по нажатию на названия дней недели. Даты начала и конца урока можно изменить по нажатию.</string>
+    <string name="settings5">5. Настройки</string>
+    <string name="settingsText">Во вкладке \"Настройки\" можно указать максимальную отметку, минимальный средний балл для жёлтого и красного цветов, включить и выключить уведомления и отключение звука телефона во время уроков, а также сбросить данные.</string>
+    <string name="notifications6">6. Уведомления</string>
+    <string name="notificationsText">Чтобы получать уведомления с информацией о текущем и следущем уроках и отключать звук во время уроков, заполните расписание во вкладке \"Расписание\", настройте расписание звонков во вкладке \"Звонки\". </string>
+</resources>

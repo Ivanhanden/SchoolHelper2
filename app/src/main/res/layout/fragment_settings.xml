@@ -1,0 +1,226 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical"
+              tools:context="com.handen.schoolhelper2.fragments.SettingsFragment">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="16dp"
+            android:layout_weight="0"
+            android:layout_marginRight="8dp"
+            android:text="@string/maxNote"
+            android:textAppearance="?attr/textAppearanceListItem"
+            android:textSize="18sp" />
+
+        <TextView
+            android:id="@+id/maxNote"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="8"
+            android:layout_weight="1"
+            android:textAppearance="?attr/textAppearanceListItem"
+            android:textSize="18sp" />
+
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="0"
+            android:id="@+id/maxPlus"
+            android:background="@android:color/transparent"
+            android:src="@drawable/ic_add" />
+
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="0"
+            android:layout_marginRight="8dp"
+            android:id="@+id/maxMinus"
+            android:background="@android:color/transparent"
+            android:src="@drawable/ic_remove" />
+
+
+    </LinearLayout>
+
+    <View
+        android:layout_marginTop="8dp"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:background="#bdbdbd"
+        />
+
+    <Switch
+        android:id="@+id/isShowNotifications"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="8dp"
+        android:textAppearance="?attr/textAppearanceListItem"
+        android:text="@string/isShowNotifications"/>
+
+    <Switch
+        android:id="@+id/isMuting"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="8dp"
+        android:textAppearance="?attr/textAppearanceListItem"
+        android:text="@string/isMuting"/>
+
+    <View
+        android:layout_marginTop="8dp"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:background="#bdbdbd"
+        />
+
+    <TextView
+        android:id="@+id/textView4"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="@color/colorAccent"
+        android:layout_marginTop="4dp"
+        android:layout_marginLeft="16dp"
+        android:textAppearance="?attr/textAppearanceListItem"
+        android:text="@string/subjectColors"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="32sp"
+        android:layout_marginTop="12dp"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/redColor"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:enabled="false"
+            android:text="@string/redColor"
+            android:textAppearance="?attr/textAppearanceListItem" />
+
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="0"
+            android:id="@+id/redPlus"
+            android:background="@android:color/transparent"
+            android:src="@drawable/ic_add" />
+
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="0"
+            android:layout_marginRight="8dp"
+            android:id="@+id/redMinus"
+            android:background="@android:color/transparent"
+            android:src="@drawable/ic_remove" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="32sp"
+        android:layout_marginTop="12dp"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/yellowColor"
+            android:layout_width="wrap_content"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:text="Жёлтый цвет с 5.5 баллов"
+            android:textAppearance="?attr/textAppearanceListItem"
+            />
+
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="0"
+            android:id="@+id/yellowPlus"
+            android:background="@android:color/transparent"
+            android:src="@drawable/ic_add" />
+
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="0"
+            android:id="@+id/yellowMinus"
+            android:layout_marginRight="8dp"
+            android:background="@android:color/transparent"
+            android:src="@drawable/ic_remove" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="32sp"
+        android:layout_marginTop="12dp"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/greenColor"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Зелёный цвет с 8 баллов"
+            android:textAppearance="?attr/textAppearanceListItem" />
+
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="0"
+            android:id="@+id/greenPlus"
+            android:background="@android:color/transparent"
+            android:src="@drawable/ic_add" />
+
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="0"
+            android:background="@android:color/transparent"
+            android:id="@+id/greenMinus"
+            android:layout_marginRight="8dp"
+            android:src="@drawable/ic_remove" />
+
+    </LinearLayout>
+
+    <View
+        android:layout_marginTop="8dp"
+        android:layout_width="match_parent"
+
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_height="1dp"
+        android:background="#bdbdbd"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/reset"
+        android:layout_marginTop="4dp"
+        android:layout_marginLeft="16dp"
+        android:text="@string/reset"
+        android:textAppearance="?attr/textAppearanceListItem"
+        />
+
+</LinearLayout>

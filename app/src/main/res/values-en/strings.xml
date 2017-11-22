@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">School Helper</string>
+    <string name="NoteIsNotCorrect">Invalid note</string>
+    <string name="about">About app</string>
+    <string name="aboutApp">Application is aimed at helping pupils to study better.</string>
+    <string name="action_settings" translatable="true">Settings</string>
+    <string name="adding">Adding</string>
+    <string name="areYouSure">Do you really want to delete? This action can not be undo.</string>
+    <string name="beforeRemoving">Before deleting timetable, remove it from every day</string>
+    <string name="cancel">Cancel</string>
+    <string name="classes">Classrooms</string>
+    <string name="classroom">Classroom:</string>
+    <string name="classs">Class:</string>
+    <string name="confirmation">Confirmation</string>
+    <string name="daysNames">"Monday,Tuesday,Wednesday,Thursday,Friday,Saturday,Sunday "</string>
+    <string name="defaultLessonName">Empty</string>
+    <string name="defaultTimetable">8.00;8.45;8.55;9.40;10.00;10.45;11.05;11.50;12.00;12.45;12.55;13.40;14.00;14.45;15.00;15.45</string>
+    <string name="delete">Delete</string>
+    <string name="done">Done</string>
+    <string name="editing">Editing</string>
+    <string name="enterNote">Enter note</string>
+    <string name="greenColor">"Green color from "</string>
+    <string name="help">Help</string>
+    <string name="invalidDate">Invalid date</string>
+    <string name="isMuting">Is muting during classes</string>
+    <string name="isShowNotifications">Is show notifications</string>
+    <string name="lastTimetable">You can`t remove last timetable</string>
+    <string name="lessonHasStarted">Lesson has started</string>
+    <string name="lessonNow">There is a lesson</string>
+    <string name="maxNote">Max note:</string>
+    <string name="myContacts">My contacts:</string>
+    <string name="newSubject">New subject</string>
+    <string name="noteIsTooBig">Note can`t be higher than max note, seted in settings</string>
+    <string name="notes">Notes</string>
+    <string name="notes2">2. Notes</string>
+    <string name="notesText">To see the notes list, click on subject. Notes are adding and editing via click.</string>
+    <string name="notifications6">6. Notifications</string>
+    <string name="notificationsText">"To get notifications with information about current and next lessons and mute device during lessons, fill lessons schedule, fill timetable "</string>
+    <string name="numberOfLessons">Lessons number:</string>
+    <string name="points">points</string>
+    <string name="redColor">Red color from 0 points</string>
+    <string name="reset">Data reset</string>
+    <string name="schedule3">3. Schedule</string>
+    <string name="scheduleText">To fill schedule, choose day in tab \"Schedule\", then choose your lesson from drop-down list</string>
+    <string name="schoolHelper">School Helper</string>
+    <string name="settings">Settings</string>
+    <string name="settings5">5. Settings</string>
+    <string name="settingsText">In tab \"Settings\" you can set up max note, min point for yellow and green colors, switch on and off notifications and muting device during classes</string>
+    <string name="shooseDays">Choose days</string>
+    <string name="subjectAdded">New subject is added.</string>
+    <string name="subjectColors">"Notes colors: "</string>
+    <string name="subjectList">Math,English,Chemistry,Physics,Biology</string>
+    <string name="subjectName">Subject name:</string>
+    <string name="subjects">Subjects</string>
+    <string name="subjects1">1. Subjects</string>
+    <string name="subjectsText">In tab \"Subjects\" name, average points, teacher name, classrom number are shown. To edit the subject long click on it.</string>
+    <string name="teacher">"Teacher: "</string>
+    <string name="teachersNames">Teachers</string>
+    <string name="timetable">Bells</string>
+    <string name="timetable4">4. Bells</string>
+    <string name="timetableAdded">New bells timetable is added.</string>
+    <string name="timetableText">In tab \"Bells\" you can create multiple bells timetables and manage to which days they will be used in new dialog, called on click on days names. Dates of beginning and end of a lesson can be changed by click.</string>
+    <string name="totalLessons">Number of lessons per day:</string>
+    <string name="week">Schedule</string>
+    <string name="yellowColor">"Yellow color from "</string>
+    <string name="yes">Yes</string>
+    <string name="yourAverage">Your average point:</string>
+    <string name="vk">https://vk.com/handeninc</string>
+    <string name="navigation_drawer_close" translatable="true">Close navigation drawer</string>
+    <string name="navigation_drawer_open" translatable="true">Open navigation drawer</string>
+    <string name="gmail">handeninc@gmail.com</string>
+</resources>

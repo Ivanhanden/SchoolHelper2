@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/subjectListFragment"
+    android:name="com.handen.schoolhelper2.fragments.SubjectListFragment"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_marginLeft="16dp"
+    android:layout_marginRight="16dp"
+    android:orientation="vertical"
+    app:layoutManager="LinearLayoutManager"
+    tools:context="com.handen.schoolhelper2.fragments.SubjectListFragment"
+    tools:listitem="@layout/fragment_subject">
+
+    <TextView
+        android:id="@+id/averageTextView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textAppearance="?attr/textAppearanceListItem"
+        android:layout_marginTop="8dp"
+        android:text="Ваш средний балл"
+        android:textSize="18sp"/>
+
+        <android.support.v7.widget.RecyclerView
+
+            android:id="@+id/subjectList"
+            android:name="com.handen.schoolhelper2.fragments.SubjectListFragment"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:overScrollMode="never"
+            app:layoutManager="LinearLayoutManager"
+            tools:context="com.handen.schoolhelper2.fragments.SubjectListFragment"
+            tools:listitem="@layout/fragment_subject">
+
+
+        </android.support.v7.widget.RecyclerView>
+
+    </LinearLayout>
+
