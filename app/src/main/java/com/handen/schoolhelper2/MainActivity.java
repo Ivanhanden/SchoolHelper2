@@ -508,6 +508,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         classroom.setText(subject.getClassroom());
         final ImageButton deleteImageButton = (ImageButton) view.findViewById(R.id.deleteButton);
 
+
+
         alertDialogBuilder.setNegativeButton(getResources().getString(R.string.cancel), null);
         alertDialogBuilder.setPositiveButton(getResources().getString(R.string.done), new DialogInterface.OnClickListener() {
 

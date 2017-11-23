@@ -73,5 +73,15 @@
         android:layout_marginLeft="16dp"
         />
 
+    <TextView
+        android:id="@+id/testTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="16sp"
+        android:layout_marginTop="8dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginLeft="8dp"
+        android:text="@string/test"/>
+
 
 </LinearLayout>
