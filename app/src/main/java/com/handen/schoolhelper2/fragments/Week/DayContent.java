@@ -1,6 +1,5 @@
 package com.handen.schoolhelper2.fragments.Week;
 
-import com.handen.schoolhelper2.MainActivity;
 import com.handen.schoolhelper2.Settings;
 
 import java.util.ArrayList;
@@ -25,8 +24,6 @@ public class DayContent {
      * A map of sample (Timetable) items, by ID.
      */
     public static final Map<String, DayItem> ITEM_MAP = new HashMap<String, DayItem>();
-
-
 
     static {
         // Add some sample items.

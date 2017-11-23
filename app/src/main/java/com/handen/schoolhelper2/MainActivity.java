@@ -106,6 +106,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     public static ArrayList<Integer> daysIds = new ArrayList<>(Arrays.asList(1, 2, 3, 4, 5, 6, 0));
 
     /**
+     *  Список контрольных работ
+     */
+    public static Tests tests;
+
+    /**
      * Выбранный день
      */
     public static int choosedDay;
@@ -248,6 +253,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         sharedPreferences.loadDays(MainActivity.this); //инициализация
 
         sharedPreferences.loadTimetable(MainActivity.this);
+
+        sharedPreferences.loadTests(MainActivity.this);
+
 
 
         //Находим хост
@@ -431,6 +439,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         sharedPreferences.saveTimetable(MainActivity.this);
         sharedPreferences.saveSettings(MainActivity.this);
         sharedPreferences.saveSchedule(MainActivity.this);
+        sharedPreferences.saveTests(MainActivity.this);
     }
 
     /**
@@ -508,6 +517,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         classroom.setText(subject.getClassroom());
         final ImageButton deleteImageButton = (ImageButton) view.findViewById(R.id.deleteButton);
 
+        final TextView testTextView = (TextView) view.findViewById(R.id.testTextView);
+        if()
 
 
         alertDialogBuilder.setNegativeButton(getResources().getString(R.string.cancel), null);

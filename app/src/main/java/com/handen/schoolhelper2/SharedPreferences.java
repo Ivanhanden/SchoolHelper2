@@ -204,7 +204,6 @@ public class SharedPreferences {
         if(!s.equals("")) {
             MainActivity.days = gson.fromJson(s, new TypeToken<List<Day>>() {
             }.getType());
-
             for(int i = 0; i < 7; i ++)
             {
                 MainActivity.daysMap.put(MainActivity.daysIds.get(i), MainActivity.days.get(i));
@@ -220,7 +219,27 @@ public class SharedPreferences {
                 MainActivity.daysMap.put(MainActivity.daysIds.get(i), day);
             }
         }
+    }
 
+    public void loadTests(Context context) {
+        Gson gson = new Gson();
+        mSharedPreferences = context.getSharedPreferences("SchoolHelper", Context.MODE_PRIVATE);
+        String s = mSharedPreferences.getString("tests", "");
+        if(!s.equals("")) {
+            MainActivity.tests = new Tests();
+        }
+        else {
+            MainActivity.tests = gson.fromJson(s, Tests.class);
+        }
+    }
+
+    public void saveTests(Context context) {
+        mSharedPreferences = context.getSharedPreferences("SchoolHelper", Context.MODE_PRIVATE);
+        android.content.SharedPreferences.Editor prefsEditor = mSharedPreferences.edit();
+        Gson gson = new Gson();
+
+        prefsEditor.putString("tests", gson.toJson(MainActivity.tests));
+        prefsEditor.commit();
     }
 
 }
