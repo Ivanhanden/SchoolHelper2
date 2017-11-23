@@ -36,11 +36,35 @@ public class Tests {
         return tests.size();
     }
 
+    public boolean hasTest(Subject subject) {
+        //Проверяем на актуальность
+        boolean ret = false;
+        for(Test test : tests) {
+            if(test.getDate().getTime() < new Date().getTime()) {
+                tests.remove(test);
+            if(test.getSubject().equals(subject))
+                ret = true;
+            }
+        }
+        return ret;
+
+    }
+    public Test getTest(Subject subject) {
+        for(Test test : tests) {
+            if(test.getDate().getTime() < new Date().getTime()) {
+                tests.remove(test);
+                if(test.getSubject().equals(subject))
+                    return test;
+            }
+        }
+        return null;
+    }
+
     public void addTest(Subject subject, Date date) {
         tests.add(new Test(subject, date));
     }
 
-    private class Test{
+    public class Test{
 
         Date date;
         Subject subject;
@@ -51,8 +75,12 @@ public class Tests {
             this.date = date;
         }
 
-        private Date getDate() {
+        public Date getDate() {
             return date;
+        }
+
+        public Subject getSubject() {
+            return subject;
         }
     }
 }

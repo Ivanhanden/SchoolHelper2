@@ -1,5 +1,6 @@
 package com.handen.schoolhelper2;
 
+import android.app.DatePickerDialog;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -33,6 +34,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
@@ -51,6 +53,8 @@ import com.handen.schoolhelper2.fragments.Timetable.Timetable;
 import com.handen.schoolhelper2.fragments.TimetableListFragment;
 import com.handen.schoolhelper2.fragments.Week.Day;
 import com.handen.schoolhelper2.fragments.WeekListFragment;
+
+import junit.framework.Test;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -254,7 +258,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         sharedPreferences.loadTimetable(MainActivity.this);
 
-        sharedPreferences.loadTests(MainActivity.this);
+        sharedPreferences.loadTests(MainActivity.this); //загружаем контрольные работы
 
 
 
@@ -370,29 +374,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }
     }
 
- /*   @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.subject_list, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
-    */
-
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
@@ -481,12 +462,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         notesFragment = new NotesFragment();
         currentSubject = subjectArrayList.get(index);
         displayFragment(notesFragment, TAG_NOTES);
-/*        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-
-        fragmentTransaction.addToBackStack(TAG_NOTES);
-        fragmentTransaction.replace(R.id.FragmentHost, notesFragment, TAG_NOTES);
-        fragmentTransaction.commit();
- */
     }
 
     /**
@@ -518,7 +493,41 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         final ImageButton deleteImageButton = (ImageButton) view.findViewById(R.id.deleteButton);
 
         final TextView testTextView = (TextView) view.findViewById(R.id.testTextView);
-        if()
+        boolean hasTest = tests.hasTest(subject);
+        if(hasTest)
+        {
+            Date testDate = tests.getTest(subject).getDate();
+            testTextView.setText(R.string.testDate + new SimpleDateFormat("dd.MM.yyyy").format(testDate));
+        }
+
+        testTextView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Date date = new Date();
+                int myYear = date.getYear();
+                int myMonth = date.getMonth();
+                int myDay = date.getDay();
+                DatePickerDialog tpd = new DatePickerDialog(this, myCallBack, myYear, myMonth, myDay);
+            //    return tpd;
+             //   return super.onCreateDialog(id);
+            }
+
+                                        }
+
+                OnDate myCallBack = new DatePickerDialog.OnDateSetListener() {
+
+                    public void onDateSet(DatePicker view, int year, int monthOfYear,
+                                          int dayOfMonth) {
+                        myYear = year;
+                        myMonth = monthOfYear;
+                        myDay = dayOfMonth;
+                        tvDate.setText("Today is " + myDay + "/" + myMonth + "/" + myYear);
+                    }
+                };
+            }
+        });
+
+
 
 
         alertDialogBuilder.setNegativeButton(getResources().getString(R.string.cancel), null);
