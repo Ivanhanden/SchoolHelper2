@@ -510,9 +510,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 DatePickerDialog tpd = new DatePickerDialog(this, myCallBack, myYear, myMonth, myDay);
             //    return tpd;
              //   return super.onCreateDialog(id);
-            }
-
-                                        }
 
                 OnDate myCallBack = new DatePickerDialog.OnDateSetListener() {
 
