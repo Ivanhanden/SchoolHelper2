@@ -2,6 +2,7 @@ package com.handen.schoolhelper2;
 
 import android.content.Context;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -59,6 +60,24 @@ public class Tests {
         }
         return null;
     }
+
+    public String getTestDate(Subject subject) {
+        Test test = tests.get(0);
+        for(Test test1 : tests) {
+            if(test1.getDate().getTime() < new Date().getTime()) {
+                tests.remove(test1);
+                if(test1.getSubject().equals(subject))
+                    test = test1;
+            }
+        }
+        return new SimpleDateFormat("dd.MM.yyyy").format(test.getDate());
+    }
+
+    public Test getClosest() {
+        //Test closest = tests.get(0);
+        return tests.get(0);
+    }
+
 
     public void addTest(Subject subject, Date date) {
         tests.add(new Test(subject, date));

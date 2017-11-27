@@ -21,8 +21,10 @@ import com.handen.schoolhelper2.Note;
 import com.handen.schoolhelper2.R;
 import com.handen.schoolhelper2.Settings;
 import com.handen.schoolhelper2.Subject;
+import com.handen.schoolhelper2.Tests;
 import com.handen.schoolhelper2.fragments.SubjectListFragment.OnListFragmentInteractionListener;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -53,7 +55,14 @@ public class SubjectListRecyclerViewAdapter extends RecyclerView.Adapter<Subject
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, final int position) {
+
+
+
         holder.subject = subjectList.get(holder.getAdapterPosition());
+
+        if(MainActivity.tests.getCount() > 0 && position == 0) {
+            onBindTest(holder);
+        }
 
         String subjectText = subjectList.get(holder.getAdapterPosition()).getName();
         double average = (double) holder.subject.getAverage();
@@ -122,6 +131,22 @@ public class SubjectListRecyclerViewAdapter extends RecyclerView.Adapter<Subject
     @Override
     public int getItemCount() {
         return subjectList.size();
+    }
+
+    public void onBindTest(ViewHolder holder) {
+        String subjectText = subjectList.get(holder.getAdapterPosition()).getName();
+        double average = (double) holder.subject.getAverage();
+
+        if (average != -1.0) {
+            average = (int) (average * 100) / 100.0;
+            if ((int) average == average)
+                subjectText += "   (" + Integer.toString((int) average) + ")";
+            else
+                subjectText += "   (" + Double.toString(average) + ")";
+        }
+        holder.subjectName.setText(subjectText);
+        String testDate = holder.mView.getContext().getResources().getString(R.string.testDate);
+        holder.teacherName.setText(testDate + MainActivity.tests.getTest(holder.subject).get);
     }
 
 

@@ -492,6 +492,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         classroom.setText(subject.getClassroom());
         final ImageButton deleteImageButton = (ImageButton) view.findViewById(R.id.deleteButton);
 
+        // TextView с датой контрольной работы
         final TextView testTextView = (TextView) view.findViewById(R.id.testTextView);
         boolean hasTest = tests.hasTest(subject);
         if(hasTest)
@@ -499,31 +500,39 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             Date testDate = tests.getTest(subject).getDate();
             testTextView.setText(R.string.testDate + new SimpleDateFormat("dd.MM.yyyy").format(testDate));
         }
+        else {
 
-        testTextView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Date date = new Date();
-                int myYear = date.getYear();
-                int myMonth = date.getMonth();
-                int myDay = date.getDay();
-                DatePickerDialog tpd = new DatePickerDialog(this, myCallBack, myYear, myMonth, myDay);
-            //    return tpd;
-             //   return super.onCreateDialog(id);
+            testTextView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
 
-                OnDate myCallBack = new DatePickerDialog.OnDateSetListener() {
+                    Date date = new Date();
+                    int myYear = date.getYear();
+                    int myMonth = date.getMonth();
+                    int myDay = date.getDay();
 
-                    public void onDateSet(DatePicker view, int year, int monthOfYear,
-                                          int dayOfMonth) {
-                        myYear = year;
-                        myMonth = monthOfYear;
-                        myDay = dayOfMonth;
-                        tvDate.setText("Today is " + myDay + "/" + myMonth + "/" + myYear);
-                    }
-                };
-            }
-        });
+                    DatePickerDialog.OnDateSetListener myCallBack = new DatePickerDialog.OnDateSetListener() {
 
+                        public void onDateSet(DatePicker view, int year, int month,
+                                              int day) {
+                            //   myYear = year;
+                            //   myMonth = monthOfYear;
+                            //   myDay = dayOfMonth;
+                            testTextView.setText(R.string.nextTest + Integer.toString(day) + " " +
+                                    Integer.toString(month) + " " + Integer.toString(year));
+                            tests.addTest(subject, new Date(year, month, day));
+
+                        }
+                    };
+
+
+                    DatePickerDialog tpd = new DatePickerDialog(MainActivity.this, myCallBack, myYear, myMonth, myDay);
+                    //    return tpd;
+                    //   return super.onCreateDialog(id);
+
+                }
+            });
+        }
 
 
 
