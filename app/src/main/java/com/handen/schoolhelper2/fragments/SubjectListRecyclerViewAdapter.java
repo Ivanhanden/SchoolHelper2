@@ -1,30 +1,20 @@
 package com.handen.schoolhelper2.fragments;
 
 import android.content.Context;
-import android.content.Intent;
-import android.content.res.Resources;
-import android.graphics.Color;
-import android.os.Bundle;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.handen.schoolhelper2.MainActivity;
-import com.handen.schoolhelper2.Note;
 import com.handen.schoolhelper2.R;
 import com.handen.schoolhelper2.Settings;
 import com.handen.schoolhelper2.Subject;
-import com.handen.schoolhelper2.Tests;
 import com.handen.schoolhelper2.fragments.SubjectListFragment.OnListFragmentInteractionListener;
 
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -146,7 +136,7 @@ public class SubjectListRecyclerViewAdapter extends RecyclerView.Adapter<Subject
         }
         holder.subjectName.setText(subjectText);
         String testDate = holder.mView.getContext().getResources().getString(R.string.testDate);
-        holder.teacherName.setText(testDate + MainActivity.tests.getTest(holder.subject).get);
+        holder.teacherName.setText(testDate + MainActivity.tests.getTest(holder.subject).getDate());
     }
 
 

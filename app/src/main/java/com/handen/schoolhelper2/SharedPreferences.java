@@ -225,7 +225,7 @@ public class SharedPreferences {
         Gson gson = new Gson();
         mSharedPreferences = context.getSharedPreferences("SchoolHelper", Context.MODE_PRIVATE);
         String s = mSharedPreferences.getString("tests", "");
-        if(!s.equals("")) {
+        if(s.equals("")) {
             MainActivity.tests = new Tests();
         }
         else {

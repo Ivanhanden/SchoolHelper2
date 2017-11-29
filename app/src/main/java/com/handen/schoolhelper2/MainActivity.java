@@ -54,8 +54,6 @@ import com.handen.schoolhelper2.fragments.TimetableListFragment;
 import com.handen.schoolhelper2.fragments.Week.Day;
 import com.handen.schoolhelper2.fragments.WeekListFragment;
 
-import junit.framework.Test;
-
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -252,13 +250,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         /**
          * Инициализируем настройки
          */
+
+        sharedPreferences.loadTests(MainActivity.this); //загружаем контрольные работы
+
         sharedPreferences.loadSettings(MainActivity.this);
 
         sharedPreferences.loadDays(MainActivity.this); //инициализация
 
         sharedPreferences.loadTimetable(MainActivity.this);
-
-        sharedPreferences.loadTests(MainActivity.this); //загружаем контрольные работы
 
 
 
@@ -529,6 +528,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     DatePickerDialog tpd = new DatePickerDialog(MainActivity.this, myCallBack, myYear, myMonth, myDay);
                     //    return tpd;
                     //   return super.onCreateDialog(id);
+
+                    tpd.show();
 
                 }
             });

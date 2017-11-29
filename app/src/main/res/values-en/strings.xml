@@ -70,4 +70,7 @@
     <string name="navigation_drawer_close" translatable="true">Close navigation drawer</string>
     <string name="navigation_drawer_open" translatable="true">Open navigation drawer</string>
     <string name="gmail">handeninc@gmail.com</string>
+    <string name="test">1</string>
+    <string name="testDate">1</string>
+    <string name="nextTest">1</string>
 </resources>
