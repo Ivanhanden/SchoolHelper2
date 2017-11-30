@@ -28,6 +28,7 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.text.InputType;
 import android.text.format.DateFormat;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
@@ -58,7 +59,9 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.concurrent.CopyOnWriteArrayList;
 
@@ -505,10 +508,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 @Override
                 public void onClick(View view) {
 
-                    Date date = new Date();
-                    int myYear = date.getYear();
-                    int myMonth = date.getMonth();
-                    int myDay = date.getDay();
+                //    Date date = new Date();
+                    Calendar calendar = GregorianCalendar.getInstance();
+                    int myYear = calendar.get(Calendar.YEAR);
+                    int myMonth = calendar.get(Calendar.MONTH);
+                    int myDay = calendar.get(Calendar.DAY_OF_MONTH);
+                    //calendar.get(Calendar.YEAR);
+
+
 
                     DatePickerDialog.OnDateSetListener myCallBack = new DatePickerDialog.OnDateSetListener() {
 
@@ -517,8 +524,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                             //   myYear = year;
                             //   myMonth = monthOfYear;
                             //   myDay = dayOfMonth;
-                            testTextView.setText(R.string.nextTest + Integer.toString(day) + " " +
-                                    Integer.toString(month) + " " + Integer.toString(year));
+                            Calendar c = new GregorianCalendar(year, month ,day);
+                            testTextView.setText(getString(R.string.nextTest) + Integer.toString(c.get(Calendar.DAY_OF_MONTH)) +
+                                    "." + Integer.toString(c.get(Calendar.MONTH) + 1) + "." +
+                                    Integer.toString(c.get(Calendar.YEAR)));
                             tests.addTest(subject, new Date(year, month, day));
 
                         }

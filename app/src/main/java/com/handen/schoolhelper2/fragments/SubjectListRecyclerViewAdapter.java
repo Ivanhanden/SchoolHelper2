@@ -136,6 +136,7 @@ public class SubjectListRecyclerViewAdapter extends RecyclerView.Adapter<Subject
         }
         holder.subjectName.setText(subjectText);
         String testDate = holder.mView.getContext().getResources().getString(R.string.testDate);
+       // Tests tests =
         holder.teacherName.setText(testDate + MainActivity.tests.getTest(holder.subject).getDate());
     }
 
