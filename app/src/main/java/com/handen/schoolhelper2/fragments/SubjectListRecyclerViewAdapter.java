@@ -9,10 +9,10 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.handen.schoolhelper2.MainActivity;
 import com.handen.schoolhelper2.R;
 import com.handen.schoolhelper2.Settings;
 import com.handen.schoolhelper2.Subject;
+import com.handen.schoolhelper2.Tests;
 import com.handen.schoolhelper2.fragments.SubjectListFragment.OnListFragmentInteractionListener;
 
 import java.util.List;
@@ -46,12 +46,11 @@ public class SubjectListRecyclerViewAdapter extends RecyclerView.Adapter<Subject
     @Override
     public void onBindViewHolder(final ViewHolder holder, final int position) {
 
-
-
         holder.subject = subjectList.get(holder.getAdapterPosition());
 
-        if(MainActivity.tests.getCount() > 0 && position == 0) {
+        if(Tests.getCount() > 0 && position == 0) {
             onBindTest(holder);
+            return;
         }
 
         String subjectText = subjectList.get(holder.getAdapterPosition()).getName();
@@ -137,7 +136,9 @@ public class SubjectListRecyclerViewAdapter extends RecyclerView.Adapter<Subject
         holder.subjectName.setText(subjectText);
         String testDate = holder.mView.getContext().getResources().getString(R.string.testDate);
        // Tests tests =
-        holder.teacherName.setText(testDate + MainActivity.tests.getTest(holder.subject).getDate());
+        holder.teacherName.setText(testDate + Tests.getTest(holder.subject).getDate());
+ //       notifyItemInserted(0);
+
     }
 
 

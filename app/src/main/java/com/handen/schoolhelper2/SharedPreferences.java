@@ -226,10 +226,11 @@ public class SharedPreferences {
         mSharedPreferences = context.getSharedPreferences("SchoolHelper", Context.MODE_PRIVATE);
         String s = mSharedPreferences.getString("tests", "");
         if(s.equals("")) {
-            MainActivity.tests = new Tests();
+            Tests.tests = new ArrayList<>();
         }
         else {
-            MainActivity.tests = gson.fromJson(s, Tests.class);
+            Tests.tests = gson.fromJson(s, new TypeToken<List<Tests.Test>>() {
+            }.getType());
         }
     }
 
@@ -238,7 +239,7 @@ public class SharedPreferences {
         android.content.SharedPreferences.Editor prefsEditor = mSharedPreferences.edit();
         Gson gson = new Gson();
 
-        prefsEditor.putString("tests", gson.toJson(MainActivity.tests));
+        prefsEditor.putString("tests", gson.toJson(Tests.tests));
         prefsEditor.commit();
     }
 

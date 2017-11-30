@@ -28,7 +28,6 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.text.InputType;
 import android.text.format.DateFormat;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
@@ -113,7 +112,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     /**
      *  Список контрольных работ
      */
-    public static Tests tests;
+    //public static Tests tests;
 
     /**
      * Выбранный день
@@ -279,9 +278,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         sharedPreferences.loadSchedule(MainActivity.this);
 
-/********************************************************
- *                    Запускаем поток
- ********************************************************/
+        /********************************************************
+        *                    Запускаем поток
+        ********************************************************/
         thread = new Thread(new Runnable() {
             @Override
             public void run() {
@@ -496,10 +495,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         // TextView с датой контрольной работы
         final TextView testTextView = (TextView) view.findViewById(R.id.testTextView);
-        boolean hasTest = tests.hasTest(subject);
+        boolean hasTest = Tests.hasTest(subject);
         if(hasTest)
         {
-            Date testDate = tests.getTest(subject).getDate();
+            Date testDate = Tests.getTest(subject).getDate();
             testTextView.setText(R.string.testDate + new SimpleDateFormat("dd.MM.yyyy").format(testDate));
         }
         else {
@@ -528,7 +527,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                             testTextView.setText(getString(R.string.nextTest) + Integer.toString(c.get(Calendar.DAY_OF_MONTH)) +
                                     "." + Integer.toString(c.get(Calendar.MONTH) + 1) + "." +
                                     Integer.toString(c.get(Calendar.YEAR)));
-                            tests.addTest(subject, new Date(year, month, day));
+                            Tests.addTest(subject, new Date(year, month, day));
 
                         }
                     };

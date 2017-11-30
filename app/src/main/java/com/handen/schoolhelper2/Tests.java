@@ -23,11 +23,7 @@ public class Tests {
    //     sharedPreferences = new SharedPreferences();
    // }
 
-    public Tests() {
-        tests = new ArrayList<>();
-    }
-
-    public int getCount() {
+    public static int getCount() {
         //Проверяем на актуальность
         for(Test test : tests) {
             if(test.getDate().getTime() < new Date().getTime()) {
@@ -37,7 +33,7 @@ public class Tests {
         return tests.size();
     }
 
-    public boolean hasTest(Subject subject) {
+    public static boolean hasTest(Subject subject) {
         //Проверяем на актуальность
         boolean ret = false;
         for(Test test : tests) {
@@ -50,18 +46,18 @@ public class Tests {
         return ret;
 
     }
-    public Test getTest(Subject subject) {
+    public static Test getTest(Subject subject) {
         for(Test test : tests) {
             if(test.getDate().getTime() < new Date().getTime()) {
                 tests.remove(test);
-                if(test.getSubject().equals(subject))
-                    return test;
             }
+            if(test.getSubject().equals(subject))
+                return test;
         }
         return null;
     }
 
-    public String getTestDate(Subject subject) {
+    public static String getTestDate(Subject subject) {
         Test test = tests.get(0);
         for(Test test1 : tests) {
             if(test1.getDate().getTime() < new Date().getTime()) {
@@ -74,17 +70,17 @@ public class Tests {
         //ХАха
     }
 
-    public Test getClosest() {
+    public static Test getClosest() {
         //Test closest = tests.get(0);
         return tests.get(0);
     }
 
 
-    public void addTest(Subject subject, Date date) {
+    public static void addTest(Subject subject, Date date) {
         tests.add(new Test(subject, date));
     }
 
-    public class Test{
+    public static class Test{
 
         Date date;
         Subject subject;
