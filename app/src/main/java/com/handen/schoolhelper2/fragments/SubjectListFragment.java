@@ -1,31 +1,27 @@
 package com.handen.schoolhelper2.fragments;
 
 import android.content.Context;
-import android.graphics.Canvas;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
-import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
+import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.handen.schoolhelper2.MainActivity;
-import com.handen.schoolhelper2.Note;
 import com.handen.schoolhelper2.R;
 import com.handen.schoolhelper2.Subject;
 
-
-import java.util.List;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 /**
  * Фрагмент списка с предметами
@@ -37,6 +33,10 @@ public class SubjectListFragment extends Fragment{
     private int mColumnCount = 1;
     private OnListFragmentInteractionListener mListener;
     FloatingActionButton fab;
+    private CardView testCard;
+    private TextView testSubjectName;
+    private TextView testDateTextView;
+    private ImageButton hideTestButton;
 
 
     /**
@@ -81,8 +81,7 @@ public class SubjectListFragment extends Fragment{
         double average = 0;
         float total = 0;
         float counter = 0;
-        for(Subject subject : MainActivity.subjectArrayList)
-        {
+        for(Subject subject : MainActivity.subjectArrayList) {
             if(subject.getAverage() != -1)
             {
                 total += subject.getAverage();
@@ -106,14 +105,55 @@ public class SubjectListFragment extends Fragment{
 
             if (mColumnCount <= 1) {
                 recyclerView.setLayoutManager(new LinearLayoutManager(context));
-            } else {
+            }
+            else {
                 recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
             }
             recyclerView.setAdapter(new SubjectListRecyclerViewAdapter(MainActivity.subjectArrayList, mListener));
 
         }
 
+        testCard = (CardView) fragmentView.findViewById(R.id.testCardView);
+        testDateTextView = (TextView) fragmentView.findViewById(R.id.testDateTextView);
+        testSubjectName = (TextView) fragmentView.findViewById(R.id.testSubjectName);
+        hideTestButton = (ImageButton) fragmentView.findViewById(R.id.hideTestButton);
+        hideTestButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ViewGroup.LayoutParams layoutParams = testCard.getLayoutParams();
+                layoutParams.height = 0;
+                testCard.setLayoutParams(layoutParams);
+            }
+        });
+
+        //MainActivity.subjectArrayList
+
+        if(MainActivity.getTestCount() > 0) {
+            bindTest();
+        }
+        else {
+            ViewGroup.LayoutParams layoutParams = testCard.getLayoutParams();
+            layoutParams.height = 0;
+            testCard.setLayoutParams(layoutParams);
+        }
+
         return fragmentView;
+    }
+
+    private void bindTest() {
+        //Tests.Test test = Tests.getClosest();
+
+        Subject testSubject = MainActivity.getClosestTestSubject();
+        Date testDate = testSubject.getClosestTestDate();
+        testSubjectName.setText(testSubject.getName());
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy");
+        String dateText = getActivity().getString(R.string.testDate);
+        testDateTextView.setText(dateText + dateFormat.format(testDate));
+    }
+    public void setTestHeight() {
+        testCard.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
+                LinearLayout.LayoutParams.WRAP_CONTENT));
+        bindTest();
     }
 
     /**
@@ -132,8 +172,7 @@ public class SubjectListFragment extends Fragment{
     }
 
     @Override
-    public void onResume()
-    {
+    public void onResume() {
         super.onResume();
         ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle(getResources().getString(R.string.subjects));
         fab.setVisibility(View.VISIBLE);
@@ -147,6 +186,7 @@ public class SubjectListFragment extends Fragment{
         super.onDetach();
         mListener = null;
     }
+
     public void setFab(FloatingActionButton fab)
     {
         this.fab = fab;

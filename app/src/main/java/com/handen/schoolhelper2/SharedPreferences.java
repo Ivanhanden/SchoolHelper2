@@ -221,7 +221,7 @@ public class SharedPreferences {
         }
     }
 
-    public void loadTests(Context context) {
+/*    public void loadTests(Context context) {
         Gson gson = new Gson();
         mSharedPreferences = context.getSharedPreferences("SchoolHelper", Context.MODE_PRIVATE);
         String s = mSharedPreferences.getString("tests", "");
@@ -242,5 +242,6 @@ public class SharedPreferences {
         prefsEditor.putString("tests", gson.toJson(Tests.tests));
         prefsEditor.commit();
     }
+    */
 
 }

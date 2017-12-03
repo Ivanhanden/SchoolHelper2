@@ -12,7 +12,6 @@ import android.widget.TextView;
 import com.handen.schoolhelper2.R;
 import com.handen.schoolhelper2.Settings;
 import com.handen.schoolhelper2.Subject;
-import com.handen.schoolhelper2.Tests;
 import com.handen.schoolhelper2.fragments.SubjectListFragment.OnListFragmentInteractionListener;
 
 import java.util.List;
@@ -23,10 +22,13 @@ import java.util.List;
 public class SubjectListRecyclerViewAdapter extends RecyclerView.Adapter<SubjectListRecyclerViewAdapter.ViewHolder> {
 
     private final List<Subject> subjectList; //Список элементов
+ //   private boolean hasTest = false;
     private final OnListFragmentInteractionListener mListener;
     private Context context;
 
     public SubjectListRecyclerViewAdapter(List<Subject> items, OnListFragmentInteractionListener listener) {
+     //   if(Tests.getCount() > 0)
+    //        hasTest = true;
         subjectList = items;
         mListener = listener;
 
@@ -34,7 +36,6 @@ public class SubjectListRecyclerViewAdapter extends RecyclerView.Adapter<Subject
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-
         View view = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.fragment_subject, parent, false);
 
@@ -48,10 +49,6 @@ public class SubjectListRecyclerViewAdapter extends RecyclerView.Adapter<Subject
 
         holder.subject = subjectList.get(holder.getAdapterPosition());
 
-        if(Tests.getCount() > 0 && position == 0) {
-            onBindTest(holder);
-            return;
-        }
 
         String subjectText = subjectList.get(holder.getAdapterPosition()).getName();
         double average = (double) holder.subject.getAverage();
@@ -119,10 +116,12 @@ public class SubjectListRecyclerViewAdapter extends RecyclerView.Adapter<Subject
 
     @Override
     public int getItemCount() {
+    //    if(hasTest)
+    //        return subjectList.size() + 1;
         return subjectList.size();
     }
 
-    public void onBindTest(ViewHolder holder) {
+ /*   public void onBindTest(ViewHolder holder) {
         String subjectText = subjectList.get(holder.getAdapterPosition()).getName();
         double average = (double) holder.subject.getAverage();
 
@@ -140,6 +139,7 @@ public class SubjectListRecyclerViewAdapter extends RecyclerView.Adapter<Subject
  //       notifyItemInserted(0);
 
     }
+    */
 
 
     public class ViewHolder extends RecyclerView.ViewHolder {

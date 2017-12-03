@@ -1,10 +1,10 @@
 package com.handen.schoolhelper2;
 
 import android.content.Context;
-import android.content.Intent;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Date;
 
 /**
  * Класс, описывающий предмет
@@ -17,13 +17,14 @@ public class Subject implements Serializable {
     //    float average;
     String teacherName;
     String classroom;
-
+    Tests tests;
     public Subject(String name) {
 
         this.name = name;
         notes.add(new Note());
         teacherName = "";
         classroom = "";
+        tests = new Tests();
     }
 
     public String getName() {
@@ -116,4 +117,19 @@ public class Subject implements Serializable {
     public void setClassroom(String classroom) {
         this.classroom = classroom;
     }
+
+    public int getTestCount() {
+        return tests.getCount();
+    }
+    public Date getClosestTestDate() {
+        Date returnDate = null;
+        if(getTestCount() > 0)
+            returnDate = tests.getClosest().getDate();
+        return  returnDate;
+    }
+
+    public void addTest(Date date) {
+        tests.addTest(date);
+    }
+
 }
