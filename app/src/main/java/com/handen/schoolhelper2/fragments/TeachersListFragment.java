@@ -24,6 +24,8 @@ public class TeachersListFragment extends Fragment {
     private int mColumnCount = 1; //Кол-во колонок
     private saveTeacherName mListener; //Слушатель для событий
 
+
+
     public TeachersListFragment() { //Пустой конструктор
     }
 
