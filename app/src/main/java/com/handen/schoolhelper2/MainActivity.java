@@ -762,6 +762,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 			alertDialogBuilder.setView(view);
 			final EditText editText = (EditText) view.findViewById(R.id.enterNote);
 			editText.setInputType(InputType.TYPE_CLASS_NUMBER);
+	//		InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+	//		imm.showSoftInput(editText, InputMethodManager.SHOW_IMPLICIT);
 			alertDialogBuilder.setNegativeButton(getResources().getString(R.string.cancel), null);
 			alertDialogBuilder.setPositiveButton(getResources().getString(R.string.done), new DialogInterface.OnClickListener() {
 				@Override
@@ -780,7 +782,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 				}
 			});
 			alertDialogBuilder.create().show();
-		} else {
+		}
+		else {
 			final android.app.AlertDialog.Builder alertDialogBuilder = new android.app.AlertDialog.Builder(this);
 			alertDialogBuilder.setTitle(getResources().getString(R.string.editing));
 			// создаем view из dialog_adding.xml
@@ -808,7 +811,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 							sharedPreferences.saveSubjects(MainActivity.this);
 							RecyclerView recyclerView = (RecyclerView) findViewById(R.id.notesList);
 							recyclerView.getAdapter().notifyDataSetChanged();
-						} else
+						}
+						else
 							Toast.makeText(MainActivity.this, getString(R.string.noteIsTooBig), Toast.LENGTH_SHORT).show();
 					}
 				}
