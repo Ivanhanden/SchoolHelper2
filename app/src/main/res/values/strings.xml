@@ -77,4 +77,6 @@
     <string name="test">Выбрать дату контрольной работы</string>
     <string name="testDate">Дата контрольной работы: </string>
     <string name="nextTest">Следующая контрольная работа: </string>
+    <string name="appwidget_text">EXAMPLE</string>
+    <string name="add_widget">Add widget</string>
 </resources>
