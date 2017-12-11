@@ -4,6 +4,8 @@ import android.app.DatePickerDialog;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
+import android.appwidget.AppWidgetManager;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -1064,11 +1066,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 		return closest;
 	}
 
-
-//int a, b;
-// getClosestTest (a, b);
-
-// a?
+	private void updateWidget() {
+		Intent intent = new Intent(this, AppWidget.class);
+		intent.setAction(AppWidgetManager.ACTION_APPWIDGET_UPDATE);
+		int ids[] = AppWidgetManager.getInstance(getApplication()).
+				getAppWidgetIds(new ComponentName(getApplication(), AppWidget.class));
+		intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS,ids);
+		sendBroadcast(intent);
+	}
 
 }
 
