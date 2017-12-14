@@ -6,9 +6,7 @@ import android.appwidget.AppWidgetProvider;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
-import android.net.Uri;
 import android.widget.RemoteViews;
-import android.*;
 
 /**
  * Implementation of App Widget functionality.
@@ -22,15 +20,15 @@ public class AppWidget extends AppWidgetProvider {
                                 int appWidgetId) {
 
         // Construct the RemoteViews object
-        RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.broadcast_widget);
+        RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.app_widget);
         // Construct an Intent which is pointing this class.
-        Intent intent = new Intent(context, BroadcastWidget.class);
+        Intent intent = new Intent(context, AppWidgetProvider.class);
         intent.setAction(ACTION_SIMPLEAPPWIDGET);
         // And this time we are sending a broadcast with getBroadcast
         PendingIntent pendingIntent = PendingIntent.getBroadcast(context, 0, intent,
                 PendingIntent.FLAG_UPDATE_CURRENT);
 
-        views.setOnClickPendingIntent(R.id.tvWidget, pendingIntent);
+        views.setOnClickPendingIntent(R.id.subject_name, pendingIntent);
         // Instruct the widget manager to update the widget
         appWidgetManager.updateAppWidget(appWidgetId, views);
     }
@@ -49,10 +47,10 @@ public class AppWidget extends AppWidgetProvider {
         if (ACTION_SIMPLEAPPWIDGET.equals(intent.getAction())) {
             mCounter++;
             // Construct the RemoteViews object
-            RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.broadcast_widget);
-            views.setTextViewText(R.id.tvWidget, Integer.toString(mCounter));
+            RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.app_widget);
+            views.setTextViewText(R.id.subject_name, Integer.toString(mCounter));
             // This time we dont have widgetId. Reaching our widget with that way.
-            ComponentName appWidget = new ComponentName(context, BroadcastWidget.class);
+            ComponentName appWidget = new ComponentName(context, AppWidgetProvider.class);
             AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(context);
             // Instruct the widget manager to update the widget
             appWidgetManager.updateAppWidget(appWidget, views);

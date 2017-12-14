@@ -12,12 +12,13 @@ import java.util.Date;
  */
 
 public class Subject implements Serializable {
-    String name;
-    ArrayList<Note> notes = new ArrayList<>();
-    //    float average;
-    String teacherName;
-    String classroom;
-    Tests tests;
+    private String name;
+    private ArrayList<Note> notes = new ArrayList<>();
+    private String teacherName;
+    private String classroom;
+    private Tests tests;
+
+    //Конструктор
     public Subject(String name) {
 
         this.name = name;
@@ -94,7 +95,7 @@ public class Subject implements Serializable {
     /**
      * Метод, заполняющий список предметов в первый раз
      *
-     * @param context
+
      */
     public static void initializeSubjects(Context context) {
         for (String s : context.getResources().getString(R.string.subjectList).split(",")) {
