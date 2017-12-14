@@ -9,7 +9,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="4dp"
         >
 
         <ImageButton
@@ -18,7 +18,7 @@
             android:layout_weight="0"
             android:layout_height="wrap_content"
             android:background="@android:color/transparent"
-            android:src="@drawable/ic_clear"/>
+            android:src="@drawable/ic_keyboard_arrow_left"/>
 
         <TextView
             android:id="@+id/subject_name"
@@ -38,14 +38,14 @@
             android:layout_weight="0"
             android:layout_height="wrap_content"
             android:background="@android:color/transparent"
-            android:src="@drawable/ic_clear"/>
+            android:src="@drawable/ic_keyboard_arrow_right"/>
 
     </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="14dp"
         android:layout_marginLeft="8dp">
 
         <TextView
@@ -80,7 +80,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:layout_marginTop="16dp">
+        android:layout_marginTop="14dp">
 
 
         <ImageButton
