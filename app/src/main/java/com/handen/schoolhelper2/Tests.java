@@ -24,6 +24,8 @@ public class Tests {
         return tests.size();
     }
 
+    //
+
  /*   public static boolean hasTest(Subject subject) {
         //Проверяем на актуальность
         boolean hasTest = false;
