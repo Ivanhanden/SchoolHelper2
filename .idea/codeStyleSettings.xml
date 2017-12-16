@@ -64,6 +64,10 @@
         <XML>
           <option name="XML_LEGACY_SETTINGS_IMPORTED" value="true" />
         </XML>
+        <codeStyleSettings language="JAVA">
+          <option name="CATCH_ON_NEW_LINE" value="true" />
+          <option name="FINALLY_ON_NEW_LINE" value="true" />
+        </codeStyleSettings>
         <codeStyleSettings language="XML">
           <option name="FORCE_REARRANGE_MODE" value="1" />
           <indentOptions>
@@ -224,6 +228,5 @@
       </value>
     </option>
     <option name="USE_PER_PROJECT_SETTINGS" value="true" />
-    <option name="PREFERRED_PROJECT_CODE_STYLE" value="Default (1)" />
   </component>
 </project>
