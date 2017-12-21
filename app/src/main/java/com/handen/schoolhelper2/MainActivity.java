@@ -380,13 +380,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
 		if (id == R.id.subjectFragment) {
 			displayFragment(subjectListFragment, TAG_SUBJECT_LIST);
-
 		} else if (id == R.id.weekFragment) {
 			displayFragment(weekListFragment, TAG_WEEK_LIST);
-
 		} else if (id == R.id.namesFragment) {
 			displayFragment(teachersListFragment, TAG_NAMES_LIST);
-
 		} else if (id == R.id.timetableFragment) {
 			timetableListFragment = new TimetableListFragment();
 			timetableListFragment.setFab(fab);
@@ -403,7 +400,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 		} else if (id == R.id.help) {
 			helpFragment = new HelpFragment();
 			displayFragment(helpFragment, TAG_HELP);
-
 		}
 
 		DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -498,25 +494,18 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 			testTextView.setText(getString(R.string.nextTest) + new SimpleDateFormat("dd.MM.yyyy").format(testDate));
 		}
 		else {
-
 			testTextView.setOnClickListener(new View.OnClickListener() {
 				@Override
 				public void onClick(View view) {
-
-					//    Date date = new Date();
 					Calendar calendar = GregorianCalendar.getInstance();
 					int myYear = calendar.get(Calendar.YEAR);
 					int myMonth = calendar.get(Calendar.MONTH);
 					int myDay = calendar.get(Calendar.DAY_OF_MONTH);
-					//calendar.get(Calendar.YEAR);
 
 					DatePickerDialog.OnDateSetListener myCallBack = new DatePickerDialog.OnDateSetListener() {
 
 						public void onDateSet(DatePicker view, int year, int month,
 											  int day) {
-							//   myYear = year;
-							//   myMonth = monthOfYear;
-							//   myDay = dayOfMonth;
 							Calendar c = new GregorianCalendar(year, month, day);
 							Date testDate = new Date(year - 1900, month, day);
 							if (testDate.getTime() < new Date().getTime() &&
@@ -526,7 +515,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 								testTextView.setText(getResources().getText(R.string.nextTest) + Integer.toString(c.get(Calendar.DAY_OF_MONTH)) +
 										"." + Integer.toString(c.get(Calendar.MONTH) + 1) + "." +
 										Integer.toString(c.get(Calendar.YEAR)));
-
 								subject.addTest(testDate);
 								subjectListFragment.setTestHeight();
 								sharedPreferences.saveSubjects(MainActivity.this);
@@ -534,38 +522,26 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 						}
 					};
 
-
 					DatePickerDialog tpd = new DatePickerDialog(MainActivity.this, myCallBack, myYear, myMonth, myDay);
-					//    return tpd;
-					//   return super.onCreateDialog(id);
-
 					tpd.show();
-
 				}
 			});
 		}
-
 		alertDialogBuilder.setNegativeButton(getResources().getString(R.string.cancel), null);
 		alertDialogBuilder.setPositiveButton(getResources().getString(R.string.done), new DialogInterface.OnClickListener() {
-
 			@Override
 			public void onClick(DialogInterface dialog, int which) {
 
 				if (!subjectName.getText().toString().equals("")) {
 					subject.setName(subjectName.getText().toString());
-
 				}
-				//    if (!teacherNameET.getText().toString().equals("")) {
 				subject.setTeacherName(teacherNameET.getText().toString());
-				//    }
-				//        if (!classroom.getText().toString().equals("")) {
 				subject.setClassroom(classroom.getText().toString());
-				//      }
 
 				sharedPreferences.saveSubjects(MainActivity.this);
+
 				RecyclerView recyclerView = (RecyclerView) fragmentHost.findViewById(R.id.subjectList);
 				recyclerView.getAdapter().notifyDataSetChanged();
-
 			}
 		});
 		final android.app.AlertDialog alertDialog = alertDialogBuilder.show();
@@ -591,7 +567,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 			}
 		});
 	}
-
 	/**
 	 * Метод, который запускает фрагмент с списком уроков на выбранный день
 	 */
@@ -601,8 +576,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 		displayFragment(lessonListFragment, TAG_LESSONS_LIST);
 
 	}
-
-
 	@Override
 	public void saveSchedule() {
 		sharedPreferences.saveSchedule(MainActivity.this);
@@ -628,7 +601,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 		alertDialogBuilder.setPositiveButton(getResources().getString(R.string.done), new DialogInterface.OnClickListener() {
 			@Override
 			public void onClick(DialogInterface dialog, int which) {
-
 				int i = 0;
 				for (CheckBox checkBox : checkBoxes) {
 					if (checkBox.isChecked()) {
@@ -639,7 +611,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 					}
 					i++;
 				}
-
 				sharedPreferences.saveTimetable(MainActivity.this);
 				sharedPreferences.saveDays(MainActivity.this);
 
@@ -656,7 +627,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 				daysTV.setText(daysNames);
 			}
 		});
-
 		alertDialogBuilder.setAdapter(new ListAdapter() {
 			@Override
 			public boolean areAllItemsEnabled() {

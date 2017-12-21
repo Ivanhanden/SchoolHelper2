@@ -8,6 +8,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.view.View;
 import android.widget.RemoteViews;
+import android.widget.Toast;
 
 import com.handen.schoolhelper2.fragments.Timetable.Timetable;
 import com.handen.schoolhelper2.fragments.Week.Day;
@@ -20,6 +21,7 @@ import static com.handen.schoolhelper2.MainActivity.days;
 import static com.handen.schoolhelper2.MainActivity.daysMap;
 import static com.handen.schoolhelper2.MainActivity.schedule;
 import static com.handen.schoolhelper2.MainActivity.subjectArrayList;
+import static com.handen.schoolhelper2.MainActivity.timetables;
 import static com.handen.schoolhelper2.Settings.MAX_NOTE;
 
 /**
@@ -83,6 +85,7 @@ public class WidgetProvider extends AppWidgetProvider {
         else
             views.setViewVisibility(R.id.increase_note, View.VISIBLE);
 
+
         ComponentName appWidget = new ComponentName(context, WidgetProvider.class);
         AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(context);
         appWidgetManager.updateAppWidget(appWidget, views);
@@ -134,12 +137,16 @@ public class WidgetProvider extends AppWidgetProvider {
                 PendingIntent.FLAG_UPDATE_CURRENT);
         views.setOnClickPendingIntent(R.id.add_note, add);
 
+        views.setTextViewText(R.id.note, Integer.toString(currentNote));
+
+        if(subjectArrayList == null && timetables == null && days == null &&
+                daysMap == null && schedule == null) {
+            Toast.makeText(context, "Всё null", Toast.LENGTH_SHORT).show();
+            appWidgetManager.updateAppWidget(appWidgetId, views);
+        }
         getWidgetData();
         bindSubjectData(views);
 
-        views.setTextViewText(R.id.note, Integer.toString(currentNote));
-
-        // Instruct the widget manager to update the widget
         appWidgetManager.updateAppWidget(appWidgetId, views);
     }
 
@@ -153,7 +160,6 @@ public class WidgetProvider extends AppWidgetProvider {
             timetable = MainActivity.timetables.get(currentDay.getTimetableIndex()); //Получаем текущее расписание звонков
 
         fillSubjects();
-//        countCurrentLessonNumber(currentDate);
     }
     static void bindSubjectData(RemoteViews views) {
         Subject subject = mSubjects.get(currentLessonNumber);
