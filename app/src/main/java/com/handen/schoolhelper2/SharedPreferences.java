@@ -252,4 +252,11 @@ public class SharedPreferences {
         }
         return ret;
     }
+
+    public int saveCurrentLessonNumber() {
+        return -1;
+    }
+    public int loadCurrentLessonNumber() {
+        return -1;
+    }
 }

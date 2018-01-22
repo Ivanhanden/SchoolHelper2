@@ -143,12 +143,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
      */
     public static boolean isMuted = false;
 
-    /**********Константы**********/
-//    public static double RED_COLOR = 5.5;
-//    public static double YELLOW_COLOR = 8.0;
-//    public static double GREEN_COLOR = 10.0;
     public static int TOTALDAYS = 7;
-    //    public static int TOTALLESSONS = 8;
     public static int NOTIFICATION_ID = 25;
 
     /**

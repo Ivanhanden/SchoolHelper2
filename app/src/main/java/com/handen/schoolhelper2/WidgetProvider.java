@@ -17,11 +17,6 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
-import static com.handen.schoolhelper2.Settings.MAX_NOTE;
-
-/**
- * Implementation of App Widget functionality.
- */
 public class WidgetProvider extends AppWidgetProvider {
 
     private static final String ACTION_PREVIOUS_SUBJECT = "ACTION_PREVIOUS_SUBJECT";
@@ -35,7 +30,7 @@ public class WidgetProvider extends AppWidgetProvider {
 
     private Context mContext;
     private static String defaultSubjectName;
-    private static int maxNote = MAX_NOTE; //TODO избавиться от MAXNOTE
+    private static int maxNote;
     private static int currentNote = maxNote;
     private static Timetable timetable;
     private static ArrayList<Subject> mSubjects = new ArrayList<>();
@@ -46,14 +41,88 @@ public class WidgetProvider extends AppWidgetProvider {
     @Override
     public void onReceive(Context context, Intent intent) {
         SharedPreferences sharedPreferences = new SharedPreferences(context);
-        System.out.println("onReceive");
+
         super.onReceive(context, intent);
-        System.err.println("onReceive");
+
         mContext = context;
         defaultSubjectName = context.getResources().getString(R.string.defaultLessonName);
-        System.err.println(intent.getAction());
+
 
         RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.app_widget);
+
+        String action = intent.getAction();
+        System.out.println(action);
+        assert action != null;
+        switch (action) {
+            case ACTION_PREVIOUS_SUBJECT:
+                currentLessonNumber--;
+                break;
+            case ACTION_NEXT_SUBJECT:
+                currentLessonNumber++;
+                break;
+            case ACTION_INCREASE:
+                currentNote++;
+                views.setTextViewText(R.id.note, Integer.toString(currentNote));
+                break;
+            case ACTION_DECREASE:
+                currentNote--;
+                views.setTextViewText(R.id.note, Integer.toString(currentNote));
+                break;
+            case ACTION_ADD:
+                ArrayList<Subject> subjects = sharedPreferences.loadSubjects();
+                int subjectIndex = subjects.indexOf(currentSubject);
+                if (subjectIndex != -1) {
+                    subjects.get(subjectIndex).getNotes().add(new Note(new Date(), Integer.toString(currentNote)));
+                    Toast.makeText(context, context.getString(R.string.noteAddedSuccessfully), Toast.LENGTH_SHORT).show();
+                    sharedPreferences.saveSubjects(subjects);
+                }
+            case ACTION_UPDATE:
+                currentLessonNumber = intent.getIntExtra(EXTRA_NUMBER, 0);
+                Settings settings1 = sharedPreferences.loadSettings();
+                maxNote = settings1.MAX_NOTE;
+                currentNote = maxNote;
+                break;
+            default:
+                System.out.println("default");
+                Settings settings = sharedPreferences.loadSettings();
+                maxNote = settings.MAX_NOTE;
+                currentNote = maxNote;
+                currentLessonNumber = 0;
+                break;
+        }
+
+  /*      if (ACTION_PREVIOUS_SUBJECT.equals(action)) {
+            currentLessonNumber--;
+        }
+        else
+            if (ACTION_NEXT_SUBJECT.equals(action)) {
+                currentLessonNumber++;
+            }
+            else
+                if (ACTION_INCREASE.equals(action)) {
+                    currentNote++;
+                    views.setTextViewText(R.id.note, Integer.toString(currentNote));
+                }
+                else
+                    if (ACTION_DECREASE.equals(action)) {
+                        currentNote--;
+                        views.setTextViewText(R.id.note, Integer.toString(currentNote));
+                    }
+                    else
+                        if (ACTION_ADD.equals(action)) {
+                            ArrayList<Subject> subjects = sharedPreferences.loadSubjects();
+                            int subjectIndex = subjects.indexOf(currentSubject);
+                            if (subjectIndex != -1) {
+                                subjects.get(subjectIndex).getNotes().add(new Note(new Date(), Integer.toString(currentNote)));
+                                Toast.makeText(context, context.getString(R.string.noteAddedSuccessfully), Toast.LENGTH_SHORT).show();
+                                sharedPreferences.saveSubjects(subjects);
+                            }
+                        }
+                        else
+                            if (ACTION_UPDATE.equals(action))
+                                currentLessonNumber = intent.getIntExtra(EXTRA_NUMBER, 0);
+                                */
+
 
         if (currentNote <= 1)
             views.setViewVisibility(R.id.decrease_note, View.INVISIBLE);
@@ -63,59 +132,20 @@ public class WidgetProvider extends AppWidgetProvider {
             views.setViewVisibility(R.id.increase_note, View.INVISIBLE);
         else
             views.setViewVisibility(R.id.increase_note, View.VISIBLE);
-
         if (currentLessonNumber == 0)
             views.setViewVisibility(R.id.previous_subject, View.INVISIBLE);
         else
             views.setViewVisibility(R.id.previous_subject, View.VISIBLE);
-        if (currentLessonNumber >= 7)
+        if (currentLessonNumber == 7)
             views.setViewVisibility(R.id.next_subject, View.INVISIBLE);
         else
             views.setViewVisibility(R.id.next_subject, View.VISIBLE);
-
-
-        String action = intent.getAction();
-
-
-
-        if (ACTION_PREVIOUS_SUBJECT.equals(action)) {
-            System.err.println("previous");
-            currentLessonNumber--;
-        }
-        if (ACTION_NEXT_SUBJECT.equals(action)) {
-            System.err.println("next");
-            currentLessonNumber++;
-        }
-        if (ACTION_INCREASE.equals(action)) {
-            System.err.println("increase");
-            currentNote++;
-            views.setTextViewText(R.id.note, Integer.toString(currentNote));
-        }
-        if (ACTION_DECREASE.equals(action)) {
-            System.err.println("decrease");
-            currentNote--;
-            views.setTextViewText(R.id.note, Integer.toString(currentNote));
-        }
-        if (ACTION_ADD.equals(action)) {
-            System.err.println("add");
-            ArrayList<Subject> subjects = sharedPreferences.loadSubjects();
-            int subjectIndex = subjects.indexOf(currentSubject);
-            if (subjectIndex != -1) {
-                subjects.get(subjectIndex).getNotes().add(new Note(new Date(), Integer.toString(currentNote)));
-                Toast.makeText(context, context.getString(R.string.noteAddedSuccessfully), Toast.LENGTH_SHORT).show();
-                sharedPreferences.saveSubjects(subjects);
-            }
-        }
-        if (ACTION_UPDATE.equals(action))
-            currentLessonNumber = intent.getIntExtra(EXTRA_NUMBER, 0);
-
-        if(currentLessonNumber > 7) {
+        if (currentLessonNumber > 7) {
             currentLessonNumber--;
             views.setViewVisibility(R.id.next_subject, View.INVISIBLE);
         }
 
         getWidgetData();
-
 
         currentSubject = mSubjects.get(currentLessonNumber);
 
@@ -128,9 +158,9 @@ public class WidgetProvider extends AppWidgetProvider {
         appWidgetManager.updateAppWidget(appWidget, views);
     }
 
+
     void getWidgetData() {
         SharedPreferences sharedPreferences = new SharedPreferences(mContext);
-        maxNote = MAX_NOTE;
         Date currentDate = new Date();
 
         currentDay = sharedPreferences.loadDaysMap().get(currentDate.getDay()); //Текущий день
@@ -169,15 +199,14 @@ public class WidgetProvider extends AppWidgetProvider {
 
     void fillSubjects() {
         SharedPreferences sharedPreferences = new SharedPreferences(mContext);
-        int scheduleId = -1;
+        int currentScheduleId = -1;
         ArrayList<Day> days = sharedPreferences.loadDays();
         for (Day day : days) {
             if(day.getName().equals(currentDay.getName()))
-                scheduleId = days.indexOf(day);
+                currentScheduleId = days.indexOf(day);
         }
-//        int scheduleId = sharedPreferences.loadDays().indexOf(currentDay);
-        if (scheduleId != -1) {
-            ArrayList<Integer> subjectIndexes = sharedPreferences.loadSchedule().get(scheduleId);
+        if (currentScheduleId != -1) {
+            ArrayList<Integer> subjectIndexes = sharedPreferences.loadSchedule().get(currentScheduleId);
             mSubjects.clear();
             for (int i : subjectIndexes) {
                 if (i > -1)
@@ -190,7 +219,6 @@ public class WidgetProvider extends AppWidgetProvider {
 
     @Override
     public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
-        System.err.println("onUpdate");
         mContext = context;
         // There may be multiple widgets active, so update all of them
         for (int appWidgetId : appWidgetIds) {
@@ -236,5 +264,12 @@ public class WidgetProvider extends AppWidgetProvider {
         // Instruct the widget manager to update the widget
         appWidgetManager.updateAppWidget(appWidgetId, views);
     }
+
+
+    enum ACTION {
+        ACTION_PREVIOUS_SUBJECT, ACTION_NEXT_SUBJECT, ACTION_INCREASE, ACTION_DECREASE,
+        ACTION_ADD, ACTION_UPDATE;
+    }
+
 }
 
