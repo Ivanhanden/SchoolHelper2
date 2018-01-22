@@ -22,33 +22,28 @@ import java.util.List;
 public class SubjectListRecyclerViewAdapter extends RecyclerView.Adapter<SubjectListRecyclerViewAdapter.ViewHolder> {
 
     private final List<Subject> subjectList; //Список элементов
- //   private boolean hasTest = false;
+    //   private boolean hasTest = false;
     private final OnListFragmentInteractionListener mListener;
     private Context context;
 
     public SubjectListRecyclerViewAdapter(List<Subject> items, OnListFragmentInteractionListener listener) {
-     //   if(Tests.getCount() > 0)
-    //        hasTest = true;
+        //   if(Tests.getCount() > 0)
+        //        hasTest = true;
         subjectList = items;
         mListener = listener;
-
     }
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.fragment_subject, parent, false);
-
         context = parent.getContext();
-
         return new ViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, final int position) {
-
         holder.subject = subjectList.get(holder.getAdapterPosition());
-
 
         String subjectText = subjectList.get(holder.getAdapterPosition()).getName();
         double average = (double) holder.subject.getAverage();
@@ -76,21 +71,19 @@ public class SubjectListRecyclerViewAdapter extends RecyclerView.Adapter<Subject
             holder.adviseTV.setText(advise);
             holder.arrowImageView.setVisibility(View.VISIBLE);
         }
-        else
-        {
+        else {
             holder.adviseTV.setText("");
             holder.arrowImageView.setVisibility(View.INVISIBLE);
         }
         holder.subjectName.setText(subjectText);
         String sdv = holder.adviseTV.getText().toString();
 
-        if(holder.subject.getClassroom() == null)
-        {
+        if (holder.subject.getClassroom() == null) {
             holder.subject.setClassroom("");
         }
 
         holder.teacherName.setText(holder.subject.getTeacherName());
-        if(holder.subject.getClassroom().equals(""))
+        if (holder.subject.getClassroom().equals(""))
             holder.classroom.setText("");
         else
             holder.classroom.setText(holder.mView.getResources().getString(R.string.classs) + holder.subject.getClassroom());
@@ -116,8 +109,8 @@ public class SubjectListRecyclerViewAdapter extends RecyclerView.Adapter<Subject
 
     @Override
     public int getItemCount() {
-    //    if(hasTest)
-    //        return subjectList.size() + 1;
+        //    if(hasTest)
+        //        return subjectList.size() + 1;
         return subjectList.size();
     }
 

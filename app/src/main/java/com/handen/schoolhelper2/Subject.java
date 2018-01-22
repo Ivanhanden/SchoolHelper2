@@ -20,7 +20,6 @@ public class Subject implements Serializable {
 
     //Конструктор
     public Subject(String name) {
-
         this.name = name;
         notes.add(new Note());
         teacherName = "";
@@ -44,15 +43,14 @@ public class Subject implements Serializable {
         float summ = 0;
         if (notes.size() != 1) {
             for (Note note : notes) {
-                if(!note.getNote().replace(" ", "").equals("")) {
+                if (!note.getNote().replace(" ", "").equals("")) {
                     if (Integer.parseInt(note.getNote().replace(" ", "")) > -1) {
                         summ += Float.parseFloat(note.getNote().replace(" ", ""));
                     }
                 }
             }
             return summ / (notes.size() - 1);
-        }
-        else
+        } else
             return -1;
     }
 
@@ -82,8 +80,8 @@ public class Subject implements Serializable {
         int ret = 0;
         if (notes.size() != 1) {
             for (Note note : notes) {
-                if(!note.getNote().replace(" ","").equals("")) {
-                    if (Integer.parseInt(note.getNote().replace(" ","")) > ret) {
+                if (!note.getNote().replace(" ", "").equals("")) {
+                    if (Integer.parseInt(note.getNote().replace(" ", "")) > ret) {
                         ret = Integer.parseInt(note.getNote().replace(" ", ""));
                     }
                 }
@@ -94,8 +92,6 @@ public class Subject implements Serializable {
 
     /**
      * Метод, заполняющий список предметов в первый раз
-     *
-
      */
     public static void initializeSubjects(Context context) {
         for (String s : context.getResources().getString(R.string.subjectList).split(",")) {
@@ -122,11 +118,12 @@ public class Subject implements Serializable {
     public int getTestCount() {
         return tests.getCount();
     }
+
     public Date getClosestTestDate() {
         Date returnDate = null;
-        if(getTestCount() > 0)
+        if (getTestCount() > 0)
             returnDate = tests.getClosest().getDate();
-        return  returnDate;
+        return returnDate;
     }
 
     public void addTest(Date date) {

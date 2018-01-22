@@ -197,12 +197,10 @@ public class TimetableListRecyclerViewAdapter extends RecyclerView.Adapter<Timet
 
                     TimePickerDialog timePickerDialog;
                     timePickerDialog = new TimePickerDialog(parent.getContext(), new TimePickerDialog.OnTimeSetListener() {
-
                         @Override
                         public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
     //                        if (timePicker.isShown()) {
                                 try {
-
                                     Date newDate = dateFormat.parse(Integer.toString(selectedHour) + "." + Integer.toString(selectedMinute));
                                     if (position == 0) //Если дата первая, и она после даты конца урока
                                     {

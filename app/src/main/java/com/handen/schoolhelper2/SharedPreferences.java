@@ -1,7 +1,6 @@
 package com.handen.schoolhelper2;
 
 import android.content.Context;
-import android.util.Log;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -10,6 +9,7 @@ import com.handen.schoolhelper2.fragments.Week.Day;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
@@ -20,93 +20,110 @@ import java.util.concurrent.CopyOnWriteArrayList;
 
 public class SharedPreferences {
     android.content.SharedPreferences mSharedPreferences;
-    android.content.SharedPreferences.Editor mEditor;
+    android.content.SharedPreferences.Editor editor;
+    Context context;
 
     /**
      * Конструкор
      */
-    public SharedPreferences() {
-
+    public SharedPreferences(Context context) {
+        mSharedPreferences = context.getSharedPreferences("SchoolHelper", Context.MODE_PRIVATE);
+        editor = mSharedPreferences.edit();
+        this.context = context;
     }
 
     /**
      * Метод, который сохраняет предметы и отметки по каждому предмету
      *
-     * @param context
      */
-    public void saveSubjects(Context context) {
+    public void saveSubjects(ArrayList<Subject> subjects) {
         String s = "";
-        mSharedPreferences = context.getSharedPreferences("SchoolHelper", Context.MODE_PRIVATE);
-        android.content.SharedPreferences.Editor prefsEditor = mSharedPreferences.edit();
+        
+        editor = mSharedPreferences.edit();
         Gson gson = new Gson();
 
-        for (int i = 0; i < MainActivity.subjectArrayList.size(); i++) {
+        for (int i = 0; i < subjects.size(); i++) {
             if (i != 0)
                 s += "\t";
-            s += gson.toJson(MainActivity.subjectArrayList.get(i));
+            s += gson.toJson(subjects.get(i));
         }
-        prefsEditor.putString("subjects", s);
-        prefsEditor.commit();
+        editor.putString("subjects", s);
+        editor.commit();
 
     }
 
     /**
      * Метод, который загружает список предметов и отметки по каждому предмету
      *
-     * @param context
-     */
 
-    public void loadSubjects(Context context) {
-        MainActivity.subjectArrayList = new ArrayList<>();
+     */
+    public ArrayList<Subject> loadSubjects() {
+        ArrayList<Subject> ret = new ArrayList<>();
+
         Gson gson = new Gson();
-        mSharedPreferences = context.getSharedPreferences("SchoolHelper", Context.MODE_PRIVATE);
+        
 
         for (String s : mSharedPreferences.getString("subjects", "").split("\t")) {
             if (s.equals(""))
                 continue;
-            MainActivity.subjectArrayList.add(gson.fromJson(s, Subject.class));
+            ret.add(gson.fromJson(s, Subject.class));
         }
+        return ret;
     }
 
-    public void saveSchedule(Context context) {
+    public void saveSchedule() {
         String s = "";
-        mSharedPreferences = context.getSharedPreferences("SchoolHelper", Context.MODE_PRIVATE);
-        android.content.SharedPreferences.Editor prefsEditor = mSharedPreferences.edit();
+        
+        editor = mSharedPreferences.edit();
         Gson gson = new Gson();
 
         for (int i = 0; i < MainActivity.schedule.size(); i++) {
             if (i != 0)
                 s += "\t";
             s += gson.toJson(MainActivity.schedule.get(i));
-
         }
-        prefsEditor.putString("schedule", s);
-        prefsEditor.commit();
-
+        editor.putString("schedule", s);
+        editor.commit();
     }
 
-    public void loadSchedule(Context context) {
+    public ArrayList<ArrayList<Integer>> loadSchedule() {
         Gson gson = new Gson();
-        mSharedPreferences = context.getSharedPreferences("SchoolHelper", Context.MODE_PRIVATE);
-        int i = 0;
-        ArrayList<Integer> list;
-
-        for (String s : mSharedPreferences.getString("schedule", "").split("\t")) {
-            if (s.equals(""))
-                list = new ArrayList<>(Arrays.asList(-1, -1, -1, -1, -1, -1, -1, -1));
-            else
-                list = gson.fromJson(s, new TypeToken<List<Integer>>() {
-                }.getType());
-            if(i < MainActivity.schedule.size())
-                MainActivity.schedule.set(i++, list);
+        ArrayList<ArrayList<Integer>> ret = new ArrayList<>();
+        String schedules = mSharedPreferences.getString("schedule", "");
+        if(schedules.equals("")) {
+            for(int i = 0; i < 7; i ++) {
+                ret.add(new ArrayList<>(Arrays.asList(-1, -1, -1, -1, -1, -1, -1, -1)));
+            }
         }
+        else {
+            for (String schedule : schedules.split("\t")) {
+                ArrayList<Integer> list = (gson.fromJson(schedule, new TypeToken<List<Integer>>() {
+                }.getType()));
+                ret.add(list);
+            }
+        }
+
+   /*     for (String schedules : mSharedPreferences.getString("schedules", "").split("\t")) {
+
+            if (schedules.equals(""))
+                for(int i = 0; i < 7; i ++) {
+                    list = new ArrayList<>(Arrays.asList(-1, -1, -1, -1, -1, -1, -1, -1));
+                }
+            else
+                list = gson.fromJson(schedules, new TypeToken<List<Integer>>() {
+                }.getType());
+          //  if(i < Settings.TOTALLESSONS)
+            ret.add(list);
+        }
+        */
+        return ret;
     }
 
-    public void saveTimetable(Context context) {
+    public void saveTimetable() {
         String text = "";
         //Получаем sharedPreferences
-        mSharedPreferences = context.getSharedPreferences("SchoolHelper", Context.MODE_PRIVATE);
-        android.content.SharedPreferences.Editor prefsEditor = mSharedPreferences.edit();
+        
+        editor = mSharedPreferences.edit();
 
         Gson gson = new Gson();
         //Конвертируем каждое расписание звонков в json
@@ -116,14 +133,15 @@ public class SharedPreferences {
             text += gson.toJson(MainActivity.timetables.get(i));
         }
 
-        prefsEditor.putString("timetable", text);
-        prefsEditor.commit();
+        editor.putString("timetable", text);
+        editor.commit();
     }
 
-    public void loadTimetable(Context context) {
-        MainActivity.timetables = new CopyOnWriteArrayList<>();
+    public CopyOnWriteArrayList<Timetable> loadTimetable() {
+       // MainActivity.timetables = new CopyOnWriteArrayList<>();
+        CopyOnWriteArrayList<Timetable> ret = new CopyOnWriteArrayList<>();
         Gson gson = new Gson();
-        mSharedPreferences = context.getSharedPreferences("SchoolHelper", Context.MODE_PRIVATE);
+        
         //Получаем строку из данных
         String s = mSharedPreferences.getString("timetable", "");
 
@@ -131,42 +149,39 @@ public class SharedPreferences {
         // Если Timetable не создавали
         if (s.length() == 0) {
             Timetable timetable = new Timetable();
-            MainActivity.timetables.add(timetable);
+            ret.add(timetable);
             for(Day day : MainActivity.days)
             {
                 day.setTimetableIndex(0);
             }
         }
         else {
-            for(String s1 : array)
-            {
+            for(String s1 : array) {
                 //Формируем экземпляр класса Timetable из json
                 Timetable timetable = gson.fromJson(s1, Timetable.class);
-                MainActivity.timetables.add(timetable);
+                ret.add(timetable);
             }
         }
+        return ret;
     }
 
-    public void saveSettings(Context context) {
-
-        mSharedPreferences = context.getSharedPreferences("SchoolHelper", Context.MODE_PRIVATE);
-        android.content.SharedPreferences.Editor prefsEditor = mSharedPreferences.edit();
+    public void saveSettings() {
+        
+        editor = mSharedPreferences.edit();
         Gson gson = new Gson();
 
-        prefsEditor.putString("settings", gson.toJson(MainActivity.settings));
+        editor.putString("settings", gson.toJson(MainActivity.settings));
 
-        prefsEditor.putInt("MAX_NOTE", Settings.MAX_NOTE);
-        prefsEditor.putBoolean("IS_SHOW_NOTIFICATIONS", Settings.IS_SHOW_NOTIFICATIONS);
-        prefsEditor.putBoolean("IS_MUTING", Settings.IS_MUTING);
-        prefsEditor.putString("YELLOW_COLOR", Double.toString(Settings.YELLOW_COLOR));
-        prefsEditor.putString("GREEN_COLOR", Double.toString(Settings.GREEN_COLOR));
+        editor.putInt("MAX_NOTE", Settings.MAX_NOTE);
+        editor.putBoolean("IS_SHOW_NOTIFICATIONS", Settings.IS_SHOW_NOTIFICATIONS);
+        editor.putBoolean("IS_MUTING", Settings.IS_MUTING);
+        editor.putString("YELLOW_COLOR", Double.toString(Settings.YELLOW_COLOR));
+        editor.putString("GREEN_COLOR", Double.toString(Settings.GREEN_COLOR));
 
-
-
-        prefsEditor.commit();
+        editor.commit();
     }
 
-    public void loadSettings(Context context) {
+    public Settings loadSettings() {
 
         int maxNote;
         boolean isShowNotifications;
@@ -175,7 +190,7 @@ public class SharedPreferences {
         double greenColor;
 
      //   Gson gson = new Gson();
-        mSharedPreferences = context.getSharedPreferences("SchoolHelper", Context.MODE_PRIVATE);
+        
         String s = mSharedPreferences.getString("settings", "");
 
         maxNote = mSharedPreferences.getInt("MAX_NOTE", 10);
@@ -183,65 +198,58 @@ public class SharedPreferences {
         isMuting = mSharedPreferences.getBoolean("IS_MUTING", true);
         yellowColor = Double.parseDouble(mSharedPreferences.getString("YELLOW_COLOR", "5.5"));
         greenColor = Double.parseDouble(mSharedPreferences.getString("GREEN_COLOR", "8.0"));
-        MainActivity.settings = new Settings(maxNote, isShowNotifications, isMuting, yellowColor, greenColor);
+        return new Settings(maxNote, isShowNotifications, isMuting, yellowColor, greenColor);
+        //MainActivity.settings = new Settings(maxNote, isShowNotifications, isMuting, yellowColor, greenColor);
     }
 
-    public void saveDays(Context context) {
-
-        mSharedPreferences = context.getSharedPreferences("SchoolHelper", Context.MODE_PRIVATE);
-        android.content.SharedPreferences.Editor prefsEditor = mSharedPreferences.edit();
+    public void saveDays() {
+        
+        editor = mSharedPreferences.edit();
         Gson gson = new Gson();
 
-        prefsEditor.putString("days", gson.toJson(MainActivity.days));
-        prefsEditor.commit();
+        editor.putString("days", gson.toJson(MainActivity.days));
+        editor.commit();
     }
 
-    public void loadDays(Context context) {
-        Log.d("loadDays", "loadDays");
+    public ArrayList<Day> loadDays() {
         Gson gson = new Gson();
-        mSharedPreferences = context.getSharedPreferences("SchoolHelper", Context.MODE_PRIVATE);
+        ArrayList<Day> ret;
+        ArrayList<String> daysNames = new ArrayList<>(Arrays.asList(context.getResources().getString(R.string.daysNames).split(",")));
+        ArrayList<Integer> daysIds = new ArrayList<>(Arrays.asList(1, 2, 3, 4, 5, 6, 0));
+        
         String s = mSharedPreferences.getString("days", "");
-        if(!s.equals("")) {
-            MainActivity.days = gson.fromJson(s, new TypeToken<List<Day>>() {
-            }.getType());
-            for(int i = 0; i < 7; i ++)
-            {
-                MainActivity.daysMap.put(MainActivity.daysIds.get(i), MainActivity.days.get(i));
-            }
-
-        }
-        else {
-            MainActivity.days = new ArrayList<>();
-            for(int i = 0; i < 7; i ++)
-            {
-                Day day = new Day(MainActivity.daysNames.get(i));
-                MainActivity.days.add(day);
-                MainActivity.daysMap.put(MainActivity.daysIds.get(i), day);
-            }
-        }
-    }
-
-/*    public void loadTests(Context context) {
-        Gson gson = new Gson();
-        mSharedPreferences = context.getSharedPreferences("SchoolHelper", Context.MODE_PRIVATE);
-        String s = mSharedPreferences.getString("tests", "");
         if(s.equals("")) {
-            Tests.tests = new ArrayList<>();
+            ret = new ArrayList<>();
+            for(int i = 0; i < 7; i ++) {
+                Day day = new Day(daysNames.get(i));
+                ret.add(day);
+            }
         }
         else {
-            Tests.tests = gson.fromJson(s, new TypeToken<List<Tests.Test>>() {
-            }.getType());
+            ret = gson.fromJson(s, new TypeToken<List<Day>>(){}.getType());
         }
+
+        return ret;
     }
 
-    public void saveTests(Context context) {
-        mSharedPreferences = context.getSharedPreferences("SchoolHelper", Context.MODE_PRIVATE);
-        android.content.SharedPreferences.Editor prefsEditor = mSharedPreferences.edit();
-        Gson gson = new Gson();
+    public HashMap<Integer, Day> loadDaysMap() {
+        ArrayList<Integer> daysIds = new ArrayList<>(Arrays.asList(1, 2, 3, 4, 5, 6, 0));
+        ArrayList<String> daysNames = new ArrayList<>(Arrays.asList(context.getResources().getString(R.string.daysNames).split(",")));
 
-        prefsEditor.putString("tests", gson.toJson(Tests.tests));
-        prefsEditor.commit();
+        String s = mSharedPreferences.getString("days", "");
+        ArrayList<Day> days = loadDays();
+        HashMap<Integer, Day> ret = new HashMap<>();
+        if(s.equals("")) {
+            for(int i = 0; i < 7; i ++) {
+                Day day = new Day(daysNames.get(i));
+                ret.put(daysIds.get(i), day);
+            }
+        }
+        else {
+            for(int i = 0; i < 7; i ++) {
+                ret.put(daysIds.get(i), days.get(i));
+            }
+        }
+        return ret;
     }
-    */
-
 }

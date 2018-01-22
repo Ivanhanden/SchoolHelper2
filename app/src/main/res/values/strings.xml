@@ -77,6 +77,9 @@
     <string name="test">Выбрать дату контрольной работы</string>
     <string name="testDate">Дата контрольной работы: </string>
     <string name="nextTest">Следующая контрольная работа: </string>
+    <string name="appwidget_text">EXAMPLE</string>
+    <string name="add_widget">Add widget</string>
+    <string name="noteAddedSuccessfully">Отметка успешно добавлена</string>
 
     <string-array name="sentences">
         <item>Ни искусство, ни мудрость не могут быть достигнуты, если им не учиться.\tДемокрит</item>
