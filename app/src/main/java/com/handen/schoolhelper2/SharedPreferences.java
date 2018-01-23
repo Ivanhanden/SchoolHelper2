@@ -34,7 +34,6 @@ public class SharedPreferences {
 
     /**
      * Метод, который сохраняет предметы и отметки по каждому предмету
-     *
      */
     public void saveSubjects(ArrayList<Subject> subjects) {
         String s = "";
@@ -51,17 +50,12 @@ public class SharedPreferences {
         editor.commit();
 
     }
-
     /**
      * Метод, который загружает список предметов и отметки по каждому предмету
-     *
-
      */
     public ArrayList<Subject> loadSubjects() {
         ArrayList<Subject> ret = new ArrayList<>();
-
         Gson gson = new Gson();
-        
 
         for (String s : mSharedPreferences.getString("subjects", "").split("\t")) {
             if (s.equals(""))
@@ -102,20 +96,6 @@ public class SharedPreferences {
                 ret.add(list);
             }
         }
-
-   /*     for (String schedules : mSharedPreferences.getString("schedules", "").split("\t")) {
-
-            if (schedules.equals(""))
-                for(int i = 0; i < 7; i ++) {
-                    list = new ArrayList<>(Arrays.asList(-1, -1, -1, -1, -1, -1, -1, -1));
-                }
-            else
-                list = gson.fromJson(schedules, new TypeToken<List<Integer>>() {
-                }.getType());
-          //  if(i < Settings.TOTALLESSONS)
-            ret.add(list);
-        }
-        */
         return ret;
     }
 
@@ -189,7 +169,7 @@ public class SharedPreferences {
         double yellowColor;
         double greenColor;
 
-     //   Gson gson = new Gson();
+
         
         String s = mSharedPreferences.getString("settings", "");
 
@@ -199,7 +179,6 @@ public class SharedPreferences {
         yellowColor = Double.parseDouble(mSharedPreferences.getString("YELLOW_COLOR", "5.5"));
         greenColor = Double.parseDouble(mSharedPreferences.getString("GREEN_COLOR", "8.0"));
         return new Settings(maxNote, isShowNotifications, isMuting, yellowColor, greenColor);
-        //MainActivity.settings = new Settings(maxNote, isShowNotifications, isMuting, yellowColor, greenColor);
     }
 
     public void saveDays() {

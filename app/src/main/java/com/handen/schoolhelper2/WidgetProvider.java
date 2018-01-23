@@ -31,7 +31,7 @@ public class WidgetProvider extends AppWidgetProvider {
     private Context mContext;
     private static String defaultSubjectName;
     private static int maxNote;
-    private static int currentNote = maxNote;
+    private static int currentNote;
     private static Timetable timetable;
     private static ArrayList<Subject> mSubjects = new ArrayList<>();
     private static Day currentDay;
@@ -40,13 +40,11 @@ public class WidgetProvider extends AppWidgetProvider {
 
     @Override
     public void onReceive(Context context, Intent intent) {
-        SharedPreferences sharedPreferences = new SharedPreferences(context);
-
         super.onReceive(context, intent);
+        SharedPreferences sharedPreferences = new SharedPreferences(context);
 
         mContext = context;
         defaultSubjectName = context.getResources().getString(R.string.defaultLessonName);
-
 
         RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.app_widget);
 
@@ -70,12 +68,21 @@ public class WidgetProvider extends AppWidgetProvider {
                 break;
             case ACTION_ADD:
                 ArrayList<Subject> subjects = sharedPreferences.loadSubjects();
-                int subjectIndex = subjects.indexOf(currentSubject);
+                int subjectIndex = -1;
+                for(Subject subject : subjects) {
+                    fillSubjects();
+                    currentSubject = mSubjects.get(currentLessonNumber);
+                    if(subject.getName().equals(currentSubject.getName())) {
+                        subjectIndex = subjects.indexOf(subject);
+                        break;
+                    }
+                }
                 if (subjectIndex != -1) {
                     subjects.get(subjectIndex).getNotes().add(new Note(new Date(), Integer.toString(currentNote)));
                     Toast.makeText(context, context.getString(R.string.noteAddedSuccessfully), Toast.LENGTH_SHORT).show();
                     sharedPreferences.saveSubjects(subjects);
                 }
+                break;
             case ACTION_UPDATE:
                 currentLessonNumber = intent.getIntExtra(EXTRA_NUMBER, 0);
                 Settings settings1 = sharedPreferences.loadSettings();
@@ -84,65 +91,62 @@ public class WidgetProvider extends AppWidgetProvider {
                 break;
             default:
                 System.out.println("default");
+                currentLessonNumber = 0;
                 Settings settings = sharedPreferences.loadSettings();
                 maxNote = settings.MAX_NOTE;
                 currentNote = maxNote;
-                currentLessonNumber = 0;
                 break;
         }
 
-  /*      if (ACTION_PREVIOUS_SUBJECT.equals(action)) {
-            currentLessonNumber--;
-        }
-        else
-            if (ACTION_NEXT_SUBJECT.equals(action)) {
-                currentLessonNumber++;
-            }
-            else
-                if (ACTION_INCREASE.equals(action)) {
-                    currentNote++;
-                    views.setTextViewText(R.id.note, Integer.toString(currentNote));
-                }
-                else
-                    if (ACTION_DECREASE.equals(action)) {
-                        currentNote--;
-                        views.setTextViewText(R.id.note, Integer.toString(currentNote));
-                    }
-                    else
-                        if (ACTION_ADD.equals(action)) {
-                            ArrayList<Subject> subjects = sharedPreferences.loadSubjects();
-                            int subjectIndex = subjects.indexOf(currentSubject);
-                            if (subjectIndex != -1) {
-                                subjects.get(subjectIndex).getNotes().add(new Note(new Date(), Integer.toString(currentNote)));
-                                Toast.makeText(context, context.getString(R.string.noteAddedSuccessfully), Toast.LENGTH_SHORT).show();
-                                sharedPreferences.saveSubjects(subjects);
-                            }
-                        }
-                        else
-                            if (ACTION_UPDATE.equals(action))
-                                currentLessonNumber = intent.getIntExtra(EXTRA_NUMBER, 0);
-                                */
-
-
-        if (currentNote <= 1)
+        if (currentNote <= 1) {
             views.setViewVisibility(R.id.decrease_note, View.INVISIBLE);
-        else
-            views.setViewVisibility(R.id.decrease_note, View.VISIBLE);
-        if (currentNote >= maxNote)
-            views.setViewVisibility(R.id.increase_note, View.INVISIBLE);
-        else
+            views.setBoolean(R.id.decrease_note, "setEnabled", false);
             views.setViewVisibility(R.id.increase_note, View.VISIBLE);
-        if (currentLessonNumber == 0)
+        }
+        else {
+            views.setViewVisibility(R.id.decrease_note, View.VISIBLE);
+            views.setBoolean(R.id.decrease_note, "setEnabled", true);
+        }
+        if (currentNote >= maxNote) {
+            views.setViewVisibility(R.id.increase_note, View.INVISIBLE);
+            views.setBoolean(R.id.increase_note, "setEnabled", false);
+        }
+        else {
+            views.setViewVisibility(R.id.increase_note, View.VISIBLE);
+            views.setBoolean(R.id.increase_note, "setEnabled", true);
+        }
+        if (currentLessonNumber <= 0) {
             views.setViewVisibility(R.id.previous_subject, View.INVISIBLE);
-        else
+            views.setBoolean(R.id.previous_subject, "setEnabled", false);
+        }
+        else {
             views.setViewVisibility(R.id.previous_subject, View.VISIBLE);
-        if (currentLessonNumber == 7)
+            views.setBoolean(R.id.previous_subject, "setEnabled", true);
+        }
+        if (currentLessonNumber >= 7) {
             views.setViewVisibility(R.id.next_subject, View.INVISIBLE);
-        else
+            views.setBoolean(R.id.next_subject, "setEnabled", false);
+        }
+        else {
             views.setViewVisibility(R.id.next_subject, View.VISIBLE);
+            views.setBoolean(R.id.next_subject, "setEnabled", true);
+        }
         if (currentLessonNumber > 7) {
             currentLessonNumber--;
             views.setViewVisibility(R.id.next_subject, View.INVISIBLE);
+        }
+        if(currentLessonNumber < 0) {
+            currentLessonNumber++;
+            views.setViewVisibility(R.id.previous_subject, View.INVISIBLE);
+        }
+        if(currentNote < 1) {
+            currentNote++;
+            views.setViewVisibility(R.id.decrease_note, View.INVISIBLE);
+            views.setViewVisibility(R.id.increase_note, View.VISIBLE);
+        }
+        if(currentNote > maxNote) {
+            currentNote--;
+            views.setViewVisibility(R.id.increase_note, View.INVISIBLE);
         }
 
         getWidgetData();
@@ -150,14 +154,13 @@ public class WidgetProvider extends AppWidgetProvider {
         currentSubject = mSubjects.get(currentLessonNumber);
 
         bindSubjectData(views);
-
+        System.out.println("CurrentNote: " + currentNote);
         views.setTextViewText(R.id.note, Integer.toString(currentNote));
 
         ComponentName appWidget = new ComponentName(context, WidgetProvider.class);
         AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(context);
         appWidgetManager.updateAppWidget(appWidget, views);
     }
-
 
     void getWidgetData() {
         SharedPreferences sharedPreferences = new SharedPreferences(mContext);
