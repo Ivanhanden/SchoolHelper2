@@ -18,17 +18,17 @@ import android.widget.TextView;
 
 import com.handen.schoolhelper2.MainActivity;
 import com.handen.schoolhelper2.R;
+import com.handen.schoolhelper2.SharedPreferences;
 import com.handen.schoolhelper2.Subject;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 
 /**
  * Фрагмент списка с предметами
  */
 public class SubjectListFragment extends Fragment{
-
-    private static final String ARG_COLUMN_COUNT = "column-count";
 
     private int mColumnCount = 1;
     private OnListFragmentInteractionListener mListener;
@@ -38,20 +38,22 @@ public class SubjectListFragment extends Fragment{
     private TextView testDateTextView;
     private ImageButton hideTestButton;
 
+    LayoutInflater inflater;
+    ViewGroup container;
+    Bundle savedInstanceState;
+
 
     /**
      * Пустой конструктор
      */
     public SubjectListFragment() {
+
     }
 
-    @SuppressWarnings("unused")
-    public static SubjectListFragment newInstance(int columnCount) {
+    public static SubjectListFragment newInstance() {
         SubjectListFragment fragment = new SubjectListFragment();
         Bundle args = new Bundle();
-        args.putInt(ARG_COLUMN_COUNT, columnCount);
         fragment.setArguments(args);
-
         return fragment;
     }
 
@@ -61,12 +63,8 @@ public class SubjectListFragment extends Fragment{
      */
     @Override
     public void onCreate(Bundle savedInstanceState) {
+        System.out.println("OnCreate");
         super.onCreate(savedInstanceState);
-
-
-        if (getArguments() != null) {
-            mColumnCount = getArguments().getInt(ARG_COLUMN_COUNT);
-        }
     }
 
     /**
@@ -75,13 +73,21 @@ public class SubjectListFragment extends Fragment{
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
+        ArrayList<Subject> subjects = new ArrayList<>(new SharedPreferences(getContext()).loadSubjects());
+
+        this.inflater = inflater;
+        this.container = container;
+        this.savedInstanceState = savedInstanceState;
+
+        System.out.println("OnCreateView");
         View fragmentView = inflater.inflate(R.layout.fragment_subject_list, container, false);
         TextView averageTextView = (TextView) fragmentView.findViewById(R.id.averageTextView);
 
         double average = 0;
         float total = 0;
         float counter = 0;
-        for(Subject subject : MainActivity.subjectArrayList) {
+        for(Subject subject : subjects) {
             if(subject.getAverage() != -1)
             {
                 total += subject.getAverage();
@@ -109,7 +115,8 @@ public class SubjectListFragment extends Fragment{
             else {
                 recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
             }
-            recyclerView.setAdapter(new SubjectListRecyclerViewAdapter(MainActivity.subjectArrayList, mListener));
+            recyclerView.setAdapter(new SubjectListRecyclerViewAdapter(subjects, mListener));
+            recyclerView.getAdapter().notifyDataSetChanged();
 
         }
 
@@ -162,6 +169,7 @@ public class SubjectListFragment extends Fragment{
      */
     @Override
     public void onAttach(Context context) {
+        System.out.println("OnAttach");
         super.onAttach(context);
         if (context instanceof OnListFragmentInteractionListener) {
             mListener = (OnListFragmentInteractionListener) context;
@@ -173,8 +181,12 @@ public class SubjectListFragment extends Fragment{
 
     @Override
     public void onResume() {
+        System.out.println("OnResume");
         super.onResume();
         ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle(getResources().getString(R.string.subjects));
+        MainActivity.subjectArrayList = new ArrayList<>(new SharedPreferences(getContext()).loadSubjects());
+        onCreateView(inflater, container, savedInstanceState);
+   //     onAttach(getContext());
         fab.setVisibility(View.VISIBLE);
     }
 
@@ -185,6 +197,13 @@ public class SubjectListFragment extends Fragment{
     public void onDetach() {
         super.onDetach();
         mListener = null;
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        System.out.println("OnStart");
+ //       onAttach(getContext());
     }
 
     public void setFab(FloatingActionButton fab)

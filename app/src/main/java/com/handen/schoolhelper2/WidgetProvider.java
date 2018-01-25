@@ -78,9 +78,13 @@ public class WidgetProvider extends AppWidgetProvider {
                     }
                 }
                 if (subjectIndex != -1) {
-                    subjects.get(subjectIndex).getNotes().add(new Note(new Date(), Integer.toString(currentNote)));
+                    Note newNote = new Note(new Date(), Integer.toString(currentNote));
+                    int index = subjects.get(subjectIndex).getNotes().size() - 1;
+                    subjects.get(subjectIndex).getNotes().add(index, newNote);
                     Toast.makeText(context, context.getString(R.string.noteAddedSuccessfully), Toast.LENGTH_SHORT).show();
                     sharedPreferences.saveSubjects(subjects);
+                    if(MainActivity.subjectArrayList != null)
+                        updateApplication();
                 }
                 break;
             case ACTION_UPDATE:
@@ -162,6 +166,11 @@ public class WidgetProvider extends AppWidgetProvider {
         appWidgetManager.updateAppWidget(appWidget, views);
     }
 
+    private void updateApplication() {
+        MainActivity.subjectArrayList = new ArrayList<>(new SharedPreferences(mContext).loadSubjects());
+       // MainActivity.set
+    }
+
     void getWidgetData() {
         SharedPreferences sharedPreferences = new SharedPreferences(mContext);
         Date currentDate = new Date();
@@ -185,7 +194,6 @@ public class WidgetProvider extends AppWidgetProvider {
         String timetable = new SimpleDateFormat("H.mm").format(begin) + " - " +
                 new SimpleDateFormat("H.mm").format(end);
         views.setTextViewText(R.id.timetable, timetable);
-
 
         String subjectTitle = currentSubject.getName();
         double average = currentSubject.getAverage();
@@ -266,12 +274,6 @@ public class WidgetProvider extends AppWidgetProvider {
         views.setOnClickPendingIntent(R.id.add_note, add);
         // Instruct the widget manager to update the widget
         appWidgetManager.updateAppWidget(appWidgetId, views);
-    }
-
-
-    enum ACTION {
-        ACTION_PREVIOUS_SUBJECT, ACTION_NEXT_SUBJECT, ACTION_INCREASE, ACTION_DECREASE,
-        ACTION_ADD, ACTION_UPDATE;
     }
 
 }

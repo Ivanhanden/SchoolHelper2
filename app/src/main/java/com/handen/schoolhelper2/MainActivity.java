@@ -258,10 +258,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         fragmentHost = (FrameLayout) findViewById(R.id.FragmentHost);
 
 //********** Инициализируем список предметов **********/
+        /*
         subjectArrayList = sharedPreferences.loadSubjects();
         if (subjectArrayList.size() == 0) {
             Subject.initializeSubjects(MainActivity.this);
         }
+        */
 
         schedule = sharedPreferences.loadSchedule();
 
@@ -405,8 +407,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                         else
                             if (id == R.id.aboutApp) {
                                 aboutFragment = new AboutFragment();
-                                displayFragment(aboutFragment, TAG_SETTINGS);
-
+                                displayFragment(aboutFragment, TAG_ABOUT);
                             }
                             else
                                 if (id == R.id.help) {
@@ -423,6 +424,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     @Override
     protected void onResume() {
         super.onResume();
+        subjectArrayList = new ArrayList<>(sharedPreferences.loadSubjects());
         Date currentDate = new Date();
         Day currentDay = daysMap.get(currentDate.getDay()); //Текущий день
 
@@ -1125,6 +1127,5 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         intent.putExtra(EXTRA_NUMBER, number);
         sendBroadcast(intent);
     }
-
 }
 

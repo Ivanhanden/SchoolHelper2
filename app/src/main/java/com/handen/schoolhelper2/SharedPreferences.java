@@ -57,10 +57,17 @@ public class SharedPreferences {
         ArrayList<Subject> ret = new ArrayList<>();
         Gson gson = new Gson();
 
-        for (String s : mSharedPreferences.getString("subjects", "").split("\t")) {
-            if (s.equals(""))
-                continue;
-            ret.add(gson.fromJson(s, Subject.class));
+        String s = mSharedPreferences.getString("subjects", "");
+
+        if(s.equals("")) {
+            for (String subject : context.getResources().getString(R.string.subjectList).split(",")) {
+                ret.add(new Subject(subject));
+            }
+        }
+        else {
+            for (String subject : s.split("\t")) {
+                ret.add(gson.fromJson(subject, Subject.class));
+            }
         }
         return ret;
     }
