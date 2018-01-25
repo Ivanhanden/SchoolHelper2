@@ -64,6 +64,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.HashMap;
+import java.util.Random;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 import static com.handen.schoolhelper2.WidgetProvider.EXTRA_NUMBER;
@@ -100,17 +101,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
      * Мапа с днями, используется в daysMap.get(currentDate.getDay());
      */
     public static HashMap<Integer, Day> daysMap = new HashMap<>();
-
-    /**
-     * Используется для daysMap
-     */
-
-
-    /**
-     *  Список контрольных работ
-     */
-    //public static Tests tests;
-
     /**
      * Выбранный день
      */
@@ -119,6 +109,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     FrameLayout fragmentHost; // хост фрагментов
     FloatingActionButton fab; //Плавающая кнопка
     FragmentTransaction fragmentTransaction;
+    private TextView sentence;
+    private TextView author;
 
     /**
      * Предмет, который используется в фоновом потоке
@@ -226,6 +218,15 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 }
             }
         });
+
+        sentence = (TextView) findViewById(R.id.sentence);
+        author = (TextView) findViewById(R.id.author);
+        String[] sentencesArray = getResources().getStringArray(R.array.sentences);
+        ArrayList<String> sentences = new ArrayList<>(Arrays.asList(sentencesArray));
+        int sentenceId = new Random().nextInt(sentences.size());
+        String sent = sentences.get(sentenceId);
+        sentence.setText(sent.split("\\t")[0]);
+        author.setText(sent.split("\\t")[1]);
 
         notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
 
