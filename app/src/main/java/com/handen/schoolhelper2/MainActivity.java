@@ -219,15 +219,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             }
         });
 
-        sentence = (TextView) findViewById(R.id.sentence);
-        author = (TextView) findViewById(R.id.author);
-        String[] sentencesArray = getResources().getStringArray(R.array.sentences);
-        ArrayList<String> sentences = new ArrayList<>(Arrays.asList(sentencesArray));
-        int sentenceId = new Random().nextInt(sentences.size());
-        String sent = sentences.get(sentenceId);
-        sentence.setText(sent.split("\\t")[0]);
-        author.setText(sent.split("\\t")[1]);
-
         notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -238,6 +229,16 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+        View header = navigationView.getHeaderView(0);
+
+        sentence = (TextView) header.findViewById(R.id.sentence);
+        author = (TextView) header.findViewById(R.id.author);
+        String[] sentencesArray = getResources().getStringArray(R.array.sentences);
+        ArrayList<String> sentences = new ArrayList<>(Arrays.asList(sentencesArray));
+        int sentenceId = new Random().nextInt(sentences.size());
+        String sent = sentences.get(sentenceId);
+        sentence.setText(sent.split("\\t")[0]);
+        author.setText(sent.split("\\t")[1]);
 
 
         defaultTimetable = new ArrayList<>(Arrays.asList(MainActivity.this.getResources().getString(R.string.defaultTimetable).split(";")));
@@ -261,10 +262,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         if (subjectArrayList.size() == 0) {
             Subject.initializeSubjects(MainActivity.this);
         }
-//********** Инициализируем расписание *****************/
-  //      for (int i = 0; i < TOTALDAYS; i++) {
-  //          schedule.add(new ArrayList<Integer>(Arrays.asList(-1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1)));
-  //      }
 
         schedule = sharedPreferences.loadSchedule();
 
@@ -280,6 +277,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     Timetable timetable;
                     boolean isHaveToBeMuted = false; //Нужно ли отключать звук
                     Day currentDay = daysMap.get(currentDate.getDay()); //Текущий день
+                    ArrayList<Integer> currentSchedule = schedule.get(getDayIndex(currentDay));
 
                     if (currentDay == null) { //Проверка на то, что currentDay успешно загрузился
                         SystemClock.sleep(1000);
@@ -302,29 +300,32 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                         e.printStackTrace();
                     }
 
-                    for (int i = 0; i < Settings.TOTALLESSONS; i++) { //На каждом шаге определяем, идёт ли урок
-                        Date beginDate = timetable.getLessonBegin(i); //Дата начала урока
-                        Date endDate = timetable.getLessonEnd(i); //Дата конца урока
-                        if (currentDate.after(beginDate) && currentDate.before(endDate)) { //Если сейчас идёт урок
-                            if (schedule.get(days.indexOf(currentDay)).get(i) > -1) { //Если в расписании указан урок
+                    for (int i = 0; i < Settings.TOTALLESSONS; i++) {
+                        Date begin = timetable.getLessonBegin(i);
+                        Date end = timetable.getLessonEnd(i);
+                        //Если сейчас идёт урок
+                        if (currentDate.after(begin) && currentDate.before(end)) {
+                            //Если в расписании указан урок
+                            if (currentSchedule.get(i) > -1) {
                                 isHaveToBeMuted = true; //Звук должен быть отключён
                                 updateWidget(i);
-                                if (!subjectArrayList.get(schedule.get(days.indexOf(currentDay)).get(i)).getName().equals(threadSubject.getName())) {
-                                    threadSubject = subjectArrayList.get(schedule.get(days.indexOf(currentDay)).get(i));
-                                    if (i != Settings.TOTALLESSONS - 1 && schedule.get(days.indexOf(currentDay)).get(i + 1) > -1) { //Если урок не первый и не пустой
-                                        nextSubject = subjectArrayList.get(schedule.get(days.indexOf(currentDay)).get(i + 1));
+                                if (!subjectArrayList.get(currentSchedule.get(i)).getName().equals(threadSubject.getName())) {
+                                    threadSubject = subjectArrayList.get(currentSchedule.get(i));
+                                    //Если урок не последний и не пустой
+                                    if (i != Settings.TOTALLESSONS - 1 && currentSchedule.get(i + 1) > -1) {
+                                        nextSubject = subjectArrayList.get(currentSchedule.get(i + 1));
                                         //Показываем уведомление с информацией о двух уроках
-                                        showNotification(threadSubject, nextSubject, beginDate, endDate, timetable.getLessonBegin(i + 1), timetable.getLessonEnd(i + 1));
+                                        showNotification(threadSubject, nextSubject, begin, end, timetable.getLessonBegin(i + 1), timetable.getLessonEnd(i + 1));
                                     }
                                     else
                                         //Показываем уведомление с информацией об одном уроке
-                                        showNotification(threadSubject, null, beginDate, endDate, null, null);
+                                        showNotification(threadSubject, null, begin, end, null, null);
                                     break;
                                 }
                             }
                         }
                         //Если уроков сегодня больше нет, то скрываем все активные уведомления
-                        if (i == Settings.TOTALLESSONS - 1 && currentDate.after(endDate)) {
+                        if (i == Settings.TOTALLESSONS - 1 && currentDate.after(end)) {
                             notificationManager.cancel(NOTIFICATION_ID);
                         }
                     }
@@ -340,6 +341,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 }
             }
         });
+        thread.setName("Second Thread");
         thread.start();
 
         weekListFragment = new WeekListFragment();
@@ -1103,6 +1105,15 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             }
         }
         return closest;
+    }
+
+    private int getDayIndex(Day day) {
+        for(int i = 0; i < days.size(); i ++) {
+            Day d = days.get(i);
+            if(d.getName().equals(day.getName()))
+                return i;
+        }
+        return -1;
     }
 
     private void updateWidget(int number) {
