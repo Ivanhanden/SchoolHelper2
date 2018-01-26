@@ -15,12 +15,13 @@
     android:theme="@style/ThemeOverlay.AppCompat.Dark">
 
     <TextView
+        android:layout_marginTop="8dp"
         android:id="@+id/sentence"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="start"
         android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-        android:textSize="18sp"/>
+        android:textSize="16sp"/>
 
     <TextView
         android:id="@+id/author"
@@ -30,7 +31,6 @@
         android:textAppearance="@style/TextAppearance.AppCompat.Body1"
         android:textSize="14sp"
         />
-
 
     <LinearLayout
         android:layout_width="wrap_content"

@@ -149,7 +149,6 @@ public class SubjectListFragment extends Fragment{
 
     private void bindTest() {
         //Tests.Test test = Tests.getClosest();
-
         Subject testSubject = MainActivity.getClosestTestSubject();
         Date testDate = testSubject.getClosestTestDate();
         testSubjectName.setText(testSubject.getName());
@@ -157,6 +156,7 @@ public class SubjectListFragment extends Fragment{
         String dateText = getActivity().getString(R.string.testDate);
         testDateTextView.setText(dateText + dateFormat.format(testDate));
     }
+
     public void setTestHeight() {
         testCard.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
                 LinearLayout.LayoutParams.WRAP_CONTENT));
@@ -215,10 +215,8 @@ public class SubjectListFragment extends Fragment{
      * Интерфейс, который связывает активити, класс фрагмента и адаптера, отвечающего за предметы
      */
     public interface OnListFragmentInteractionListener {
-
         void startNotesFragment(int clickIndex);
         void startEdition(int clickIndex);
     }
-
 
 }

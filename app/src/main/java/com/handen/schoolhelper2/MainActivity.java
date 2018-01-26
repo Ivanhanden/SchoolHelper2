@@ -50,7 +50,6 @@ import com.handen.schoolhelper2.fragments.LessonListFragment;
 import com.handen.schoolhelper2.fragments.NotesFragment;
 import com.handen.schoolhelper2.fragments.SettingsFragment;
 import com.handen.schoolhelper2.fragments.SubjectListFragment;
-import com.handen.schoolhelper2.fragments.SubjectListRecyclerViewAdapter;
 import com.handen.schoolhelper2.fragments.TeachersListFragment;
 import com.handen.schoolhelper2.fragments.Timetable.Timetable;
 import com.handen.schoolhelper2.fragments.TimetableListFragment;
@@ -303,6 +302,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     catch (ParseException e) {
                         e.printStackTrace();
                     }
+                    SharedPreferences sharedPreferences = new SharedPreferences(MainActivity.this);
+                    
+                    ArrayList<Subject> subjects = sharedPreferences.loadSubjects();
 
                     for (int i = 0; i < Settings.TOTALLESSONS; i++) {
                         Date begin = timetable.getLessonBegin(i);
@@ -312,13 +314,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                             //Если в расписании указан урок
                             if (currentSchedule.get(i) > -1) {
                                 isHaveToBeMuted = true; //Звук должен быть отключён
-                                String currentSubjectName = subjectArrayList.get(currentSchedule.get(i)).getName();
+                                String currentSubjectName = subjects.get(currentSchedule.get(i)).getName();
                                 if (!currentSubjectName.equals(threadSubject.getName())) {
                                     updateWidget(i);
-                                    threadSubject = subjectArrayList.get(currentSchedule.get(i));
+                                    threadSubject = subjects.get(currentSchedule.get(i));
                                     //Если урок не последний и не пустой
                                     if (i != Settings.TOTALLESSONS - 1 && currentSchedule.get(i + 1) > -1) {
-                                        nextSubject = subjectArrayList.get(currentSchedule.get(i + 1));
+                                        nextSubject = subjects.get(currentSchedule.get(i + 1));
                                         //Показываем уведомление с информацией о двух уроках
                                         showNotification(threadSubject, nextSubject, begin, end, timetable.getLessonBegin(i + 1), timetable.getLessonEnd(i + 1));
                                     }
@@ -427,28 +429,22 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     @Override
     protected void onResume() {
         super.onResume();
+        System.out.println("OnResume");
         subjectArrayList = new ArrayList<>(sharedPreferences.loadSubjects());
-        Date currentDate = new Date();
-        Day currentDay = daysMap.get(currentDate.getDay()); //Текущий день
-        /*
 
-        if (currentDay == null || currentDay.getTimetableIndex() == -1) {
-            return;
+        Fragment currentFragment = getSupportFragmentManager().findFragmentById(R.id.FragmentHost);
+
+        if(currentFragment.getTag().equals(TAG_SUBJECT_LIST)) {
+            System.out.println("currentSubjectListFragment");
+            subjectListFragment = SubjectListFragment.newInstance();
+            subjectListFragment.setFab(fab);
+            getSupportFragmentManager()
+                    .beginTransaction()
+                    .addToBackStack(TAG_SUBJECT_LIST)
+                    .replace(R.id.FragmentHost, subjectListFragment, TAG_SUBJECT_LIST)
+                    .commit();
         }
-        */
-/*
-        Timetable timetable = MainActivity.timetables.get(currentDay.getTimetableIndex()); //Получаем текущее расписание звонков
-        for (int i = 0; i < Settings.TOTALLESSONS; i++) { //На каждом шаге определяем, идёт ли урок
-            Date beginDate = timetable.getLessonBegin(i); //Дата начала урока
-            Date endDate = timetable.getLessonEnd(i); //Дата конца урока
-            if (currentDate.after(beginDate) && currentDate.before(endDate)) { //Если сейчас идёт урок
-                if (schedule.get(getDayIndex(currentDay)).get(i) > -1) { //Если в расписании указан урок
-                    lastUpdateDate = new Date();
-                    updateWidget(i);
-                }
-            }
-        }
-        */
+
     }
 
     @Override
@@ -458,13 +454,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         sharedPreferences.saveTimetable();
         sharedPreferences.saveSettings();
         sharedPreferences.saveSchedule();
-//        sharedPreferences.saveTests(MainActivity.this);
     }
 
     /**
      * Метод, который отображает или заменяет старый фрагмент на новый фрагмент
-     *
-     * @param fragment
      */
     public void displayFragment(Fragment fragment, String TAG) {
         //Получаем текущий фрагмент
@@ -576,9 +569,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     DatePickerDialog tpd = new DatePickerDialog(MainActivity.this, myCallBack, myYear, myMonth, myDay);
                     //    return tpd;
                     //   return super.onCreateDialog(id);
-
                     tpd.show();
-
                 }
             });
         }
@@ -601,9 +592,15 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 //      }
 
                 sharedPreferences.saveSubjects(subjectArrayList);
-                RecyclerView recyclerView = (RecyclerView) fragmentHost.findViewById(R.id.subjectList);
-                recyclerView.getAdapter().notifyDataSetChanged();
-
+          //      RecyclerView recyclerView = (RecyclerView) fragmentHost.findViewById(R.id.subjectList);
+           //     recyclerView.getAdapter().notifyDataSetChanged();
+                subjectListFragment = SubjectListFragment.newInstance();
+                subjectListFragment.setFab(fab);
+                getSupportFragmentManager()
+                        .beginTransaction()
+                        .addToBackStack(TAG_SUBJECT_LIST)
+                        .replace(R.id.FragmentHost, subjectListFragment, TAG_SUBJECT_LIST)
+                        .commit();
             }
         });
         final android.app.AlertDialog alertDialog = alertDialogBuilder.show();

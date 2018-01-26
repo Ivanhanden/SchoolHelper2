@@ -8,7 +8,7 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="45dp"
         android:orientation="horizontal"
         android:layout_marginTop="4dp"
         >
@@ -26,7 +26,6 @@
             android:id="@+id/subject_name"
             android:gravity="center_horizontal|top"
             android:textColor="#808080"
-            android:layout_gravity="center"
             android:textSize="18sp"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -48,7 +47,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:layout_marginTop="14dp"
+        android:layout_marginTop="10dp"
         android:layout_marginLeft="8dp">
 
         <TextView
@@ -56,14 +55,14 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textColor="#808080"
-            android:textSize="16sp"
+            android:textSize="15sp"
             android:text=""/>
 
         <TextView
             android:id="@+id/teacher"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="16sp"
+            android:textSize="15sp"
             android:textColor="#808080"
             android:text=""
             android:layout_marginTop="8dp"/>
@@ -72,7 +71,7 @@
             android:id="@+id/timetable"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="16sp"
+            android:textSize="15sp"
             android:textColor="#808080"
             android:text=""
             android:layout_marginTop="8dp"/>
@@ -82,7 +81,7 @@
         android:layout_width="match_parent"
         android:layout_height="30dp"
         android:orientation="horizontal"
-        android:layout_marginTop="14dp">
+        android:layout_marginTop="12dp">
 
         <ImageButton
             android:id="@+id/decrease_note"
