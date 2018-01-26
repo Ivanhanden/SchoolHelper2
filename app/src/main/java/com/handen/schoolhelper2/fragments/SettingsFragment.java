@@ -298,7 +298,6 @@ public class SettingsFragment extends Fragment {
                 for (CheckBox checkBox : checkBoxes) {
                     if (checkBox.isChecked()) {
                         if (checkBox.equals(subjects)) {
-                            //TODO пофиксить баг, возможно не обновляется список предметов
                             MainActivity.subjectArrayList = new ArrayList<Subject>();
                             Subject.initializeSubjects(getContext());
                         }

@@ -114,6 +114,8 @@ public class SubjectListRecyclerViewAdapter extends RecyclerView.Adapter<Subject
         return subjectList.size();
     }
 
+
+
  /*   public void onBindTest(ViewHolder holder) {
         String subjectText = subjectList.get(holder.getAdapterPosition()).getName();
         double average = (double) holder.subject.getAverage();

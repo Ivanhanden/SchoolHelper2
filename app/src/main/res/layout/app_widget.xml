@@ -8,7 +8,7 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="30dp"
+        android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:layout_marginTop="4dp"
         >
@@ -24,7 +24,7 @@
 
         <TextView
             android:id="@+id/subject_name"
-            android:gravity="center_horizontal|center_vertical"
+            android:gravity="center_horizontal|top"
             android:textColor="#808080"
             android:layout_gravity="center"
             android:textSize="18sp"
@@ -57,7 +57,7 @@
             android:layout_height="wrap_content"
             android:textColor="#808080"
             android:textSize="16sp"
-            android:text="--"/>
+            android:text=""/>
 
         <TextView
             android:id="@+id/teacher"
@@ -65,7 +65,7 @@
             android:layout_height="wrap_content"
             android:textSize="16sp"
             android:textColor="#808080"
-            android:text="--"
+            android:text=""
             android:layout_marginTop="8dp"/>
 
         <TextView
@@ -74,10 +74,9 @@
             android:layout_height="wrap_content"
             android:textSize="16sp"
             android:textColor="#808080"
-            android:text="--"
+            android:text=""
             android:layout_marginTop="8dp"/>
     </LinearLayout>
-
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -125,7 +124,6 @@
             android:textColor="#808080"
             android:textSize="18sp"
             android:text="Добавить"/>
-
     </LinearLayout>
 
 </LinearLayout>

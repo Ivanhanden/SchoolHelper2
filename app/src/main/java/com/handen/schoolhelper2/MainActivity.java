@@ -50,6 +50,7 @@ import com.handen.schoolhelper2.fragments.LessonListFragment;
 import com.handen.schoolhelper2.fragments.NotesFragment;
 import com.handen.schoolhelper2.fragments.SettingsFragment;
 import com.handen.schoolhelper2.fragments.SubjectListFragment;
+import com.handen.schoolhelper2.fragments.SubjectListRecyclerViewAdapter;
 import com.handen.schoolhelper2.fragments.TeachersListFragment;
 import com.handen.schoolhelper2.fragments.Timetable.Timetable;
 import com.handen.schoolhelper2.fragments.TimetableListFragment;
@@ -106,6 +107,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
      */
     public static int choosedDay;
     public static Subject currentSubject; // текущий предмет
+    private Date lastUpdateDate;
     FrameLayout fragmentHost; // хост фрагментов
     FloatingActionButton fab; //Плавающая кнопка
     FragmentTransaction fragmentTransaction;
@@ -286,7 +288,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                         continue;
                     }
                     if (currentDay.getTimetableIndex() == -1) { //Если у текущего дня нет расписания, то поток усыпляется на минуту
-                        SystemClock.sleep(60000);
+                        SystemClock.sleep(600000);
                         continue;
                     }
 
@@ -310,8 +312,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                             //Если в расписании указан урок
                             if (currentSchedule.get(i) > -1) {
                                 isHaveToBeMuted = true; //Звук должен быть отключён
-                                updateWidget(i);
-                                if (!subjectArrayList.get(currentSchedule.get(i)).getName().equals(threadSubject.getName())) {
+                                String currentSubjectName = subjectArrayList.get(currentSchedule.get(i)).getName();
+                                if (!currentSubjectName.equals(threadSubject.getName())) {
+                                    updateWidget(i);
                                     threadSubject = subjectArrayList.get(currentSchedule.get(i));
                                     //Если урок не последний и не пустой
                                     if (i != Settings.TOTALLESSONS - 1 && currentSchedule.get(i + 1) > -1) {
@@ -427,20 +430,25 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         subjectArrayList = new ArrayList<>(sharedPreferences.loadSubjects());
         Date currentDate = new Date();
         Day currentDay = daysMap.get(currentDate.getDay()); //Текущий день
+        /*
 
         if (currentDay == null || currentDay.getTimetableIndex() == -1) {
             return;
         }
+        */
+/*
         Timetable timetable = MainActivity.timetables.get(currentDay.getTimetableIndex()); //Получаем текущее расписание звонков
         for (int i = 0; i < Settings.TOTALLESSONS; i++) { //На каждом шаге определяем, идёт ли урок
             Date beginDate = timetable.getLessonBegin(i); //Дата начала урока
             Date endDate = timetable.getLessonEnd(i); //Дата конца урока
             if (currentDate.after(beginDate) && currentDate.before(endDate)) { //Если сейчас идёт урок
-                if (schedule.get(days.indexOf(currentDay)).get(i) > -1) { //Если в расписании указан урок
+                if (schedule.get(getDayIndex(currentDay)).get(i) > -1) { //Если в расписании указан урок
+                    lastUpdateDate = new Date();
                     updateWidget(i);
                 }
             }
         }
+        */
     }
 
     @Override
@@ -484,7 +492,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     /**
      * Метод, который запускает фрагмент с отметками по нажатию на элемент списка предметов
-     *
      * @param index
      */
     @Override
@@ -496,7 +503,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     /**
      * Метод, который показывает диалог с редактированием предмета
-     *
      * @param clickIndex
      */
     @Override
@@ -541,7 +547,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     int myMonth = calendar.get(Calendar.MONTH);
                     int myDay = calendar.get(Calendar.DAY_OF_MONTH);
                     //calendar.get(Calendar.YEAR);
-
                     DatePickerDialog.OnDateSetListener myCallBack = new DatePickerDialog.OnDateSetListener() {
 
                         public void onDateSet(DatePicker view, int year, int month,
