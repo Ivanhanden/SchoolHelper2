@@ -5,40 +5,40 @@
               android:background="#fff3e0"
               android:orientation="vertical"
               android:padding="@dimen/widget_margin">
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="45dp"
-        android:orientation="horizontal"
         android:layout_marginTop="4dp"
+        android:orientation="horizontal"
         >
 
         <ImageButton
             android:id="@+id/previous_subject"
             android:layout_width="wrap_content"
-            android:layout_weight="0"
-            android:layout_gravity="center_vertical"
             android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_weight="0"
             android:background="@android:color/transparent"
             android:src="@drawable/ic_keyboard_arrow_left"/>
 
         <TextView
             android:id="@+id/subject_name"
-            android:gravity="center_horizontal|top"
-            android:textColor="#808080"
-            android:textSize="18sp"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_gravity="center"
             android:layout_weight="1"
+            android:gravity="center_horizontal|center_vertical"
             android:text="@string/defaultLessonName"
+            android:textColor="#808080"
+            android:textSize="18sp"
             />
 
         <ImageButton
             android:id="@+id/next_subject"
             android:layout_width="wrap_content"
-            android:layout_weight="0"
-            android:layout_gravity="center_vertical"
             android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_weight="0"
             android:background="@android:color/transparent"
             android:src="@drawable/ic_keyboard_arrow_right"/>
 
@@ -46,42 +46,41 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
+        android:layout_marginLeft="8dp"
         android:layout_marginTop="10dp"
-        android:layout_marginLeft="8dp">
+        android:orientation="vertical">
 
         <TextView
             android:id="@+id/classroom"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:text=""
             android:textColor="#808080"
-            android:textSize="15sp"
-            android:text=""/>
+            android:textSize="15sp"/>
 
         <TextView
             android:id="@+id/teacher"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="15sp"
-            android:textColor="#808080"
+            android:layout_marginTop="8dp"
             android:text=""
-            android:layout_marginTop="8dp"/>
+            android:textColor="#808080"
+            android:textSize="15sp"/>
 
         <TextView
             android:id="@+id/timetable"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="15sp"
-            android:textColor="#808080"
+            android:layout_marginTop="8dp"
             android:text=""
-            android:layout_marginTop="8dp"/>
+            android:textColor="#808080"
+            android:textSize="15sp"/>
     </LinearLayout>
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="30dp"
-        android:orientation="horizontal"
-        android:layout_marginTop="12dp">
+        android:layout_marginTop="12dp"
+        android:orientation="horizontal">
 
         <ImageButton
             android:id="@+id/decrease_note"
@@ -97,20 +96,20 @@
             android:id="@+id/note"
             android:layout_width="25dp"
             android:layout_height="wrap_content"
-            android:layout_weight="0"
             android:layout_gravity="center"
+            android:layout_weight="0"
             android:gravity="center"
+            android:text="0"
             android:textColor="#808080"
-            android:textSize="18sp"
-            android:text="0"/>
+            android:textSize="18sp"/>
 
         <ImageButton
             android:id="@+id/increase_note"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
-            android:background="@android:color/transparent"
             android:layout_weight="1"
+            android:background="@android:color/transparent"
             android:src="@drawable/ic_add"/>
 
         <TextView
@@ -120,9 +119,9 @@
             android:layout_gravity="center_vertical|right"
             android:layout_weight="1"
             android:gravity="center"
+            android:text="Добавить"
             android:textColor="#808080"
-            android:textSize="18sp"
-            android:text="Добавить"/>
+            android:textSize="18sp"/>
     </LinearLayout>
 
 </LinearLayout>

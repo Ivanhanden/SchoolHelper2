@@ -42,6 +42,9 @@ public class WidgetProvider extends AppWidgetProvider {
     public void onReceive(Context context, Intent intent) {
         super.onReceive(context, intent);
         SharedPreferences sharedPreferences = new SharedPreferences(context);
+        currentNote = sharedPreferences.loadCurrentNote();
+        maxNote = sharedPreferences.loadSettings().MAX_NOTE;
+        System.out.println("onReceive begin note: " + currentNote);
 
         mContext = context;
         defaultSubjectName = context.getResources().getString(R.string.defaultLessonName);
@@ -152,7 +155,6 @@ public class WidgetProvider extends AppWidgetProvider {
             currentNote--;
             views.setViewVisibility(R.id.increase_note, View.INVISIBLE);
         }
-
         getWidgetData();
 
         currentSubject = mSubjects.get(currentLessonNumber);
@@ -164,6 +166,7 @@ public class WidgetProvider extends AppWidgetProvider {
         ComponentName appWidget = new ComponentName(context, WidgetProvider.class);
         AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(context);
         appWidgetManager.updateAppWidget(appWidget, views);
+        sharedPreferences.saveCurrentNote(currentNote);
     }
 
     private void updateApplication() {

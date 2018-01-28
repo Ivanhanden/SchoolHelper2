@@ -169,16 +169,11 @@ public class SharedPreferences {
     }
 
     public Settings loadSettings() {
-
         int maxNote;
         boolean isShowNotifications;
         boolean isMuting;
         double yellowColor;
         double greenColor;
-
-
-        
-        String s = mSharedPreferences.getString("settings", "");
 
         maxNote = mSharedPreferences.getInt("MAX_NOTE", 10);
         isShowNotifications = mSharedPreferences.getBoolean("IS_SHOW_NOTIFICATIONS", true);
@@ -239,10 +234,14 @@ public class SharedPreferences {
         return ret;
     }
 
-    public int saveCurrentLessonNumber() {
-        return -1;
+    public int loadCurrentNote() {
+        Settings settings = this.loadSettings();
+        return mSharedPreferences.getInt("note", settings.MAX_NOTE);
     }
-    public int loadCurrentLessonNumber() {
-        return -1;
+
+    public void saveCurrentNote(int note) {
+        editor = mSharedPreferences.edit();
+        editor.putInt("note", note);
+        editor.commit();
     }
 }
